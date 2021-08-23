@@ -1,0 +1,7 @@
+{
+  "name": "HIT401",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
