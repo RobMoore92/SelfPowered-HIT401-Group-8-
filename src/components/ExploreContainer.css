@@ -7,6 +7,10 @@
   transform: translateY(-50%);
 }
 
+.title {
+  @apply text-5xl text-green-300
+}
+
 .container strong {
   font-size: 20px;
   line-height: 26px;

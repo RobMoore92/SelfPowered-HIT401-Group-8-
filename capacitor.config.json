@@ -1,6 +1,15 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "HIT401",
-	"webDir": "build",
-	"bundledWebRuntime": false
+  "appId": "com.company.hit401",
+  "appName": "HIT401",
+  "webDir": "build",
+  "bundledWebRuntime": false,
+  "SplashScreen": {
+    "launchShowDuration": 3000,
+    "launchAutoHide": false,
+    "androidScaleType": "CENTER_INSIDE",
+    "splashFullScreen": false,
+    "splashImmersive": false,
+    "backgroundColor": "#1C3461",
+    "androidSplashResourceName": "splash"
+  }
 }
