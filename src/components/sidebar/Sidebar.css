@@ -1,0 +1,19 @@
+.sidebar-icon {
+  @apply ml-4 mt-1;
+}
+
+.sidebar-title {
+  @apply text-2xl font-semibold;
+}
+
+.sidebar-note {
+  @apply ml-4;
+}
+
+.sidebar-top-list {
+  @apply mt-4;
+}
+
+.sidebar-bottom-list {
+  @apply mb-4;
+}

@@ -1,9 +1,8 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonApp, IonButton, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { SplashScreen } from "@capacitor/splash-screen";
 import firebase from "./firebase/firebase";
-import Home from "./pages/Home";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -22,41 +21,29 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import WelcomePage from "./pages/WelcomePage";
+import PageLayout from "./layouts/PageLayout/PageLayout";
+import Sidebar from "./components/sidebar/Sidebar";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-const getData = () => {
-  return firebase
-    .firestore()
-    .collection("users")
-    .get()
-    .then((querySnapshot) => {
-      const data = querySnapshot.docs.map((doc) => doc.data());
-      console.log(data); // array of cities objects
-    });
-};
-document.addEventListener("deviceready", () => {
-  setTimeout(() => {
-    SplashScreen.hide({
-      fadeOutDuration: 1000,
-    });
-  }, 2000);
-});
-const App = () => (
-  <IonApp>
+const App = () => {
+  const [user] = useAuthState(firebase.auth());
+  return (
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Switch>
-            <Route path="/home" component={WelcomePage} exact={true} />
-            <Route path="/" render={() => <Redirect to="/home" />} />
-            <Route path="*">
-              <Redirect to="/home" />
+        <IonSplitPane contentId="main">
+          <Sidebar user={user}/>
+          <IonRouterOutlet id="main">
+            <Route path="/" exact={true}>
+              <Redirect to="/welcome" />
             </Route>
-          </Switch>
-        </IonRouterOutlet>
+            <Route path="/welcome" exact={true}>
+              <PageLayout />
+            </Route>
+          </IonRouterOutlet>
+        </IonSplitPane>
       </IonReactRouter>
     </IonApp>
-  </IonApp>
-);
+  );
+};
 
 export default App;

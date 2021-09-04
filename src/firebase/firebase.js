@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
-import "firebase/analytics";
 import "firebase/firestore";
 import "firebase/auth";
+
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -16,25 +16,26 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-
-  firebase
-    .firestore()
-    .enablePersistence()
-    .catch((err) => {
-      if (err.code == "failed-precondition") {
-        // Multiple tabs open, persistence can only be enabled
-        // in one tab at a a time.
-        // ...
-      } else if (err.code == "unimplemented") {
-        // The current browser does not support all of the
-        // features required to enable persistence
-        // ...
-      }
-    });
-  firebase.analytics();
+  if (process.env.NODE_ENV !== "test") {
+    firebase
+      .firestore()
+      .enablePersistence()
+      .catch((err) => {
+        if (err.code == "failed-precondition") {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+        } else if (err.code == "unimplemented") {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+        }
+      });
+  }
 } else {
   firebase.app();
 }
 
+export const logout = () => firebase.auth().signOut();
 
 export default firebase;
