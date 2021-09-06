@@ -1,14 +1,12 @@
-import { render, waitFor, screen, fireEvent } from "@testing-library/react";
-import { ionFireEvent } from "@ionic/react-test-utils";
+
+import {  render } from "@testing-library/react";
 import LogoutButton from "./LogoutButton";
 
-describe("logout button", () => {
-  test("renders without crashing", async () => {
-    await waitFor(() => render(<LogoutButton />));
-  });
-  test("button can be clicked", async () => {
-    const { getByTestId } = await waitFor(() => render(<LogoutButton />));
-    const button = getByTestId("logout-button");
-    ionFireEvent.click(button);
+describe("logout-button", () => {
+  test("elements render correctly", async () => {
+    const { getByTestId } = render(
+      <LogoutButton/>
+    );
+    expect(getByTestId("logout-button"));
   });
 });

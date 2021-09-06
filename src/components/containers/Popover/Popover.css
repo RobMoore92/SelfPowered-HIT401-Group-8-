@@ -1,0 +1,7 @@
+.popover-wrapper .popover-content{
+    position: relative !important;
+    margin: 0 auto !important;
+    left: auto !important;
+    top: auto !important;
+    @apply w-96 p-4;
+}

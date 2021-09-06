@@ -1,0 +1,15 @@
+.button-container {
+    @apply mt-6;
+}
+
+.google-button {
+    @apply mt-2;
+}
+
+.google-text {
+    @apply ml-4 mr-6;
+}
+
+.error-text {
+    @apply text-xs text-gray-500 mb-2
+}

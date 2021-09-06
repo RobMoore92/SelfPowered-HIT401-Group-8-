@@ -1,0 +1,10 @@
+.form-error-text {
+  @apply mb-2 text-xs text-gray-500;
+}
+ion-icon {
+  pointer-events: none;
+}
+
+.auth-button {
+    @apply w-36
+}

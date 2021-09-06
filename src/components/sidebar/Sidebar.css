@@ -3,7 +3,11 @@
 }
 
 .sidebar-title {
-  @apply text-2xl font-semibold;
+  @apply text-2xl font-medium;
+}
+
+.sidebar-content {
+  @apply p-2;
 }
 
 .sidebar-note {
@@ -16,4 +20,24 @@
 
 .sidebar-bottom-list {
   @apply mb-4;
+}
+
+.split-pane-visible > ion-menu {
+  max-width: 350px;
+}
+ion-menu {
+  --ion-background-color: var(--ion-color-primary);
+  --ion-text-color: var(--ion-color-light-tint);
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+  }
+
+  ion-list {
+    /* optional, but it needs when you use gradient as a background color.*/
+    background: transparent;
+  }
+}
+
+--side-max-width {
+  @apply w-32
 }

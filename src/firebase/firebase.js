@@ -36,6 +36,4 @@ if (!firebase.apps.length) {
   firebase.app();
 }
 
-export const logout = () => firebase.auth().signOut();
-
 export default firebase;

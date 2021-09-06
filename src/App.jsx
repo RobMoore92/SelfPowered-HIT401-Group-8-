@@ -20,10 +20,12 @@ import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
-
+import "./theme/global.css";
 import PageLayout from "./layouts/PageLayout/PageLayout";
 import Sidebar from "./components/sidebar/Sidebar";
 import { useAuthState } from "react-firebase-hooks/auth";
+import WelcomePage from "./pages/WelcomePage";
+import Overview from "./pages/Overview";
 
 const App = () => {
   const [user] = useAuthState(firebase.auth());
@@ -31,13 +33,20 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <Sidebar user={user}/>
+          <Sidebar user={user} />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/welcome" />
             </Route>
             <Route path="/welcome" exact={true}>
-              <PageLayout />
+              <PageLayout title={"HIT401"}>
+                <WelcomePage user={user} />
+              </PageLayout>
+            </Route>
+            <Route path="/overview" exact={true}>
+              <PageLayout title={"Overview"}>
+                <Overview />
+              </PageLayout>
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
