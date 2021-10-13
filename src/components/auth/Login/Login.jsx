@@ -91,6 +91,7 @@ export default (props) => {
       .then(() => {
         props.setPopped(false);
         successMessage();
+        history.push("/overview")
       })
       .catch((e) => {
         errorMessage(e);
@@ -101,6 +102,7 @@ export default (props) => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validateOnBlur={false}
         onSubmit={onSubmit}
         
       >

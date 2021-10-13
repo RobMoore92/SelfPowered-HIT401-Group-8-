@@ -18,8 +18,6 @@ import {
   paperPlaneSharp,
   heartOutline,
   heartSharp,
-  archiveOutline,
-  archiveSharp,
 } from "ionicons/icons";
 import { useState } from "react";
 import Login from "../auth/Login/Login";
@@ -86,7 +84,7 @@ export default ({ user }) => {
       mdIcon: mailSharp,
     },
     {
-      title: "Clients",
+      title:  "Clients",
       url: "/clients",
       iosIcon: paperPlaneOutline,
       mdIcon: paperPlaneSharp,
@@ -98,11 +96,11 @@ export default ({ user }) => {
       mdIcon: heartSharp,
     },
     {
-      title: "Tags",
-      url: "/tags",
-      iosIcon: archiveOutline,
-      mdIcon: archiveSharp,
-    },
+      title: "Clients",
+      url: "/clients",
+      iosIcon: heartOutline,
+      mdIcon: heartSharp,
+    }
   ];
   const displayName = user?.email.replace("@anonymous.com", "");
   return (
@@ -137,6 +135,7 @@ const Pages = ({ pages }) => {
   return pages.map((page, i) => (
     <IonMenuToggle key={i} autoHide={false}>
       <IonItem
+        className="ion-padding-horizontal"
         lines="none"
         routerLink={page.url}
         onClick={page?.onClick}

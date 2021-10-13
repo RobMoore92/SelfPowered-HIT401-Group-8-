@@ -83,6 +83,7 @@ export default (props) => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validateOnBlur={false}
         onSubmit={onSubmit}
       >
         {({ handleChange, handleSubmit, isValid, dirty, values, errors }) => (
