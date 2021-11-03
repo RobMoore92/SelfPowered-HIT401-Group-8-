@@ -7,6 +7,7 @@ import {
   IonIcon,
   IonItem,
   IonList,
+  IonText,
   IonTitle,
   useIonToast,
 } from "@ionic/react";
@@ -48,7 +49,10 @@ const Account = ({ setPage, hasUsername, user }) => {
   const [present, dismiss] = useIonToast();
   return (
     <>
-      <IonTitle className={"ion-no-padding mb-4"}>Account</IonTitle>
+      <IonTitle className={"ion-no-padding mb-4 text-gray-600"}>
+        Account Settings
+      </IonTitle>
+      <IonText>Update your profile</IonText>
       <IonList>
         <IonItem className={"text-gray-700 w-full"}>
           <IonButton

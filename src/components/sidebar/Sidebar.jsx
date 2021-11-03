@@ -9,14 +9,21 @@ import {
   IonList,
   IonNote,
   IonLabel,
+  IonImg,
 } from "@ionic/react";
 import {
   attachOutline,
   briefcaseOutline,
   homeOutline,
+  informationCircleSharp,
+  informationSharp,
   listOutline,
   logoIonic,
+  logOutSharp,
   personCircleOutline,
+  personOutline,
+  personSharp,
+  settingsSharp,
 } from "ionicons/icons";
 import {
   mailOutline,
@@ -35,6 +42,7 @@ import { useLocation } from "react-router";
 import { getUserData } from "../../firebase/queries/userQueries";
 import { GlobalContext } from "../../App";
 import AccountPopover from "../popovers/AccountPopover";
+import icon from "../../images/selfpowered-small.svg";
 export default (props) => {
   const location = useLocation();
   const { user, setHelp, documents, setDocuments } = useContext(GlobalContext);
@@ -59,22 +67,22 @@ export default (props) => {
       onClick: () => {
         setAccountPopped(!accountPopped);
       },
-      iosIcon: mailOutline,
-      mdIcon: mailSharp,
+      iosIcon: personSharp,
+      mdIcon: personSharp,
     },
     {
       title: "Settings",
       onClick: () => {
         setSettingsPopped(!settingsPopped);
       },
-      iosIcon: paperPlaneOutline,
-      mdIcon: paperPlaneSharp,
+      iosIcon: settingsSharp,
+      mdIcon: settingsSharp,
     },
     {
       title: "About",
       url: "/about",
-      iosIcon: heartOutline,
-      mdIcon: heartSharp,
+      iosIcon: informationCircleSharp,
+      mdIcon: informationCircleSharp,
     },
     {
       title: "Logout",
@@ -82,8 +90,8 @@ export default (props) => {
         firebase.auth().signOut();
       },
       url: "/welcome",
-      iosIcon: heartOutline,
-      mdIcon: heartSharp,
+      iosIcon: logOutSharp,
+      mdIcon: logOutSharp,
     },
   ];
   const unauthPages = [
@@ -138,8 +146,16 @@ export default (props) => {
       <IonContent>
         <div className="sidebar-content">
           <IonList id="inbox-list">
-            <IonIcon className="sidebar-icon" size="large" icon={logoIonic} />
-            <IonListHeader className="sidebar-title">Application</IonListHeader>
+            <div className={"flex items-center mt-2 mb-4"}>
+              <img
+                className="w-12 h-12 mx-3 "
+                src={icon}
+                alt={"selfpowered-icon"}
+              />
+              <IonListHeader className="sidebar-title font-medium text-3xl tracking-wide">
+                <span className={"font-light"}>Self</span> Powered
+              </IonListHeader>
+            </div>
             {user && (
               <IonNote color="light-tint" className="sidebar-note">
                 {displayName}
@@ -200,7 +216,7 @@ const Pages = ({ pages }) => {
               ios={page.iosIcon}
               md={page.mdIcon}
             />
-            <IonLabel>{page.title}</IonLabel>
+            <IonLabel className={"font-medium"}>{page.title}</IonLabel>
           </IonItem>
         </IonMenuToggle>
       )

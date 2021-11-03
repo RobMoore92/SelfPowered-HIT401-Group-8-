@@ -5,6 +5,13 @@ import ListLayout from "../../layouts/ListLayout";
 import AddTask from "../../components/form/AddTask";
 import TaskCard from "../../components/cards/TaskCard/TaskCard";
 import { GlobalContext } from "../../App";
+import { IonIcon, IonText } from "@ionic/react";
+import {
+  calendarNumberSharp,
+  documentTextOutline,
+  textOutline,
+} from "ionicons/icons";
+import { formatDateTime } from "../../helpers/formatHelper";
 
 const Jobs = (props) => {
   const { isPopped } = props;
@@ -46,6 +53,50 @@ const Jobs = (props) => {
   return (
     user && (
       <>
+        <div>
+          <div
+            className={
+              "md:flex md:space-x-16 space-y-4 md:space-y-0 mt-4 md:mt-8 flex justify-center mb-4 grid grid-rows-2 md:grid-rows-none"
+            }
+          >
+            <div className={"flex items-center space-x-4"}>
+              <IonIcon
+                icon={calendarNumberSharp}
+                className={"text-3xl md:text-5xl text-green-500"}
+              />
+              <div className={"flex flex-col mt-1"}>
+                <IonText
+                  className={
+                    "font-bold text-xs md:text-sm  text-gray-700 uppercase tracking-widest"
+                  }
+                >
+                  Job Start Date
+                </IonText>
+                <IonText className={"text-sm md:text-base"}>
+                  {job && formatDateTime(job?.start.seconds * 1000)}
+                </IonText>
+              </div>
+            </div>
+            <div className={"flex items-center space-x-4"}>
+              <IonIcon
+                icon={calendarNumberSharp}
+                className={"text-3xl md:text-5xl text-red-500"}
+              />
+              <div className={"flex flex-col mt-1"}>
+                <IonText
+                  className={
+                    "font-bold text-xs md:text-sm text-gray-700 uppercase tracking-widest"
+                  }
+                >
+                  Job Due Date
+                </IonText>
+                <IonText className={"text-sm md:text-base"}>
+                  {job && formatDateTime(job.due.seconds * 1000)}
+                </IonText>
+              </div>
+            </div>
+          </div>
+        </div>
         <ListLayout
           data={tasks}
           filters={filters}

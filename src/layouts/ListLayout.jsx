@@ -28,10 +28,10 @@ const ListLayout = (props) => {
   const searcher = new FuzzySearch(data, searchProperties);
 
   return (
-    <div className={"flex flex-col justify-start h-full"}>
+    <div className={"flex flex-col justify-start"}>
       <div
         className={
-          "flex flex-col xl:flex-row  xl:justify-end xl:space-x-8 items-center mt-3 mr-1"
+          "flex flex-col xl:flex-row  xl:justify-center xl:space-x-8 items-center mt-3 mr-1 my-2 md:my-4"
         }
       >
         <div className={"flex  justify-center sm:flex-row"}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, useLocation } from "react-router";
-import { getTasks } from "../../firebase/queries/taskQueries";
+import { getTasks, getTasksByJob } from "../../firebase/queries/taskQueries";
 import ListLayout from "../../layouts/ListLayout";
 import AddTask from "../../components/form/AddTask";
 import TaskCard from "../../components/cards/TaskCard/TaskCard";
@@ -32,8 +32,16 @@ const Tasks = (props) => {
   ];
 
   useEffect(() => {
-    getTasks(user.uid, setTasks, orderByName, hideCompleted);
-  }, [user, orderByName, hideCompleted, refresh, location]);
+    if (user) {
+      const unsubscribe = getTasks(
+        user.uid,
+        setTasks,
+        orderByName,
+        hideCompleted
+      );
+      return () => unsubscribe();
+    }
+  }, [orderByName, hideCompleted, location, user]);
 
   return (
     user && (

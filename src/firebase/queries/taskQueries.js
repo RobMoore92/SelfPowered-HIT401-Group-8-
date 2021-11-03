@@ -9,31 +9,24 @@ export const getTasks = (
   refresh,
   setRefresh
 ) => {
-  let jobQuery = db.collection("users").doc(uid).collection("jobs");
-  jobQuery.get().then((snap) => {
-    const ids = snap.docs.map((doc) => doc.id);
-    const taskPromises = ids.map((id) => {
-      let taskQuery = jobQuery.doc(id).collection("tasks");
-      if (hideCompleted) {
-        taskQuery = taskQuery.where("completed", "==", false);
-      }
-      if (orderByName) {
-        taskQuery = taskQuery.orderBy("title_query", "asc");
-      } else {
-        taskQuery = taskQuery.orderBy("due", "asc");
-      }
-      return taskQuery
-        .get()
-        .then((r) => r.docs.map((doc) => ({ task_id: doc.id, ...doc.data() })));
-    });
+  let query = db.collectionGroup("tasks");
+  if (hideCompleted) {
+    query = query.where("completed", "==", false);
+  }
+  if (orderByName) {
+    query = query.orderBy("title_query", "asc");
+  } else {
+    query = query.orderBy("due", "asc");
+  }
 
-    Promise.all(taskPromises).then((results) => {
-      const data = [];
-      results.forEach((result, i) => {
-        data.push(...result);
-      });
-      setTasks(data);
+  return query.onSnapshot(async (snap) => {
+    const data = await snap.docs.map((doc) => {
+      if (doc.ref.parent.parent.parent.parent.id === uid) {
+        return { task_id: doc.id, ...doc.data() };
+      }
     });
+    const filteredData = data.filter((el) => el != null);
+    setTasks(filteredData);
   });
 };
 
@@ -145,7 +138,14 @@ export const editTask = (
     });
 };
 
-export const completeTask = (uid, job_id, task_id, completed) => {
+export const completeTask = (
+  uid,
+  job_id,
+  task_id,
+  completed,
+  refresh,
+  setRefresh
+) => {
   db.collection("users")
     .doc(uid)
     .collection("jobs")

@@ -23,9 +23,6 @@ export default (props) => {
     ? new Date(editValues?.job?.due.seconds * 1000)
     : new Date(parent?.due.seconds * 1000);
 
-  useEffect(() => {
-    console.log(parent);
-  });
   const initialValues = {
     task: editValues?.task || "",
     start: editValues

@@ -22,14 +22,18 @@ export default () => {
   };
   return (
     <IonFabButton
+      style={{ "--background": "#454545" }}
       data-testid="logout-button"
       onClick={clickHandler}
-      className="h-9 w-9"
+      className="menu-button mr-4"
       shape="round"
       size="small"
-      color="primary"
     >
-      <IonIcon className="logout-button" color="light" icon={logOutOutline} />
+      <IonIcon
+        className="menu-button-icon pl-1 text-xl md:text-2xl"
+        color="light"
+        icon={logOutOutline}
+      />
     </IonFabButton>
   );
 };

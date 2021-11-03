@@ -5,6 +5,25 @@ ion-icon {
   pointer-events: none;
 }
 
+.header-md::after {
+  display: none;
+}
+ion-toolbar{
+  @apply flex justify-center items-center h-20 bg-blue-500
+}
+
+ion-fab-button {
+  --box-shadow: 0px
+}
+
+.menu-button {
+  @apply md:w-9 md:h-9 w-7 h-7 flex justify-center items-center
+}
+
+.menu-button-icon {
+  @apply text-lg md:text-2xl
+}
+
 .auth-button {
   @apply w-36;
 }

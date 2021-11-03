@@ -50,37 +50,47 @@ export default ({
       <div>
         {authed ? (
           <IonPage data-testid="layout">
-            <IonHeader>
-              <IonToolbar>
-                <IonButtons slot="start">
-                  <IonMenuButton />
-                  <IonTitle className="text-2xl text-gray-800">
+            <IonHeader className={"bg-transparent"}>
+              <IonToolbar color={"none"} className={""}>
+                <div className={"flex items-center"}>
+                  <IonMenuButton color={"dark"} />
+
+                  <IonTitle className="text-2xl ml-2 font-medium text-gray-100 line-clamp-1">
                     {payloadTitle ? payload?.title : title}
                   </IonTitle>
-                </IonButtons>
+                </div>
+
                 <IonButtons slot="end" className="mr-0 sm:mr-3">
                   {showBack && (
                     <IonFabButton
+                      style={{ "--background": "#e6e6e6" }}
                       slot="end"
-                      className="h-9 w-9"
+                      className="menu-button"
                       size="small"
                       onClick={() => {
                         history.back();
                       }}
                     >
-                      <IonIcon icon={arrowBackOutline} />
+                      <IonIcon
+                        className={"menu-button-icon text-gray-700"}
+                        icon={arrowBackOutline}
+                      />
                     </IonFabButton>
                   )}
                   {showAdd && (
                     <IonFabButton
+                      style={{ "--background": "#46d530" }}
                       slot="end"
-                      className="h-9 w-9"
+                      className="menu-button"
                       size="small"
                       onClick={() => {
                         setPopped(true);
                       }}
                     >
-                      <IonIcon icon={addOutline} />
+                      <IonIcon
+                        className={"menu-button-icon"}
+                        icon={addOutline}
+                      />
                     </IonFabButton>
                   )}
                   {helpComponent && <HelpButton setShowHelp={setShowHelp} />}
@@ -89,18 +99,12 @@ export default ({
               </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-              <IonHeader collapse="condense">
-                <IonToolbar>
-                  <IonTitle size="large">123</IonTitle>
-                </IonToolbar>
-              </IonHeader>
               <div className=" sm:px-6 flex-grow h-full">
                 {cloneElement(children, {
                   showHelp: showHelp,
                   setShowHelp: setShowHelp,
                   isPopped: isPopped,
                   setPopped: setPopped,
-                  jobDetails: history.location.state?.jobDetails,
                 })}
               </div>
             </IonContent>

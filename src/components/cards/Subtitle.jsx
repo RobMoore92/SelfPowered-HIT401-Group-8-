@@ -8,26 +8,30 @@ const Subtitle = (props) => {
   return (
     <div className="flex items-center">
       <IonButton
-        className="ion-no-padding ion-no-margin"
+        className="ion-no-padding ion-no-margin focus:text-white"
         fill={"clear"}
         onClick={() => setHover(!hover)}
       >
         <IonIcon
-          className={`${
+          className={`ion-no-padding ion-no-margin ${
             color ? color : "text-gray-100"
-          } text-xl md:text-2xl mr-2`}
+          } text-lg md:text-2xl mr-1 md:mr-3`}
           icon={icon}
         />
-        <IonText
-          className={`${hasHover && "hidden"} lg:block ${
-            textColor ? textColor : "text-gray-600"
-          } text-xs xs:text-sm text-gray-100 font-medium line-clamp-1 normal-case`}
-        >
-          {text}
-        </IonText>
+        <div className={`${hasHover ? "hidden md:block" : "block"}`}>
+          <IonText
+            className={` ion-no-padding lg:block ${
+              textColor ? textColor : "text-gray-600"
+            } text-xs xs:text-sm text-gray-100 font-medium line-clamp-1 normal-case hidden`}
+          >
+            {text}
+          </IonText>
+        </div>
       </IonButton>
 
-      {hover && <HoverCard {...props} hover={hover} setHover={setHover} />}
+      {hover && hasHover && (
+        <HoverCard {...props} hover={hover} setHover={setHover} />
+      )}
     </div>
   );
 };
@@ -42,7 +46,9 @@ const HoverCard = ({ text, icon, color, setHover, hover }) => {
           onClick={() => setHover(!hover)}
         >
           <IonIcon
-            className={`${color ? color : "text-gray-600"} text-2xl mr-2`}
+            className={` ${
+              color ? color : "text-gray-600"
+            } pt-0 pb-0 text-2xl mr-2`}
             icon={icon}
           />
         </IonButton>

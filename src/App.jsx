@@ -1,5 +1,10 @@
 import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
+import {
+  IonApp,
+  IonRouterOutlet,
+  IonSplitPane,
+  useIonToast,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import firebase from "./firebase/firebase";
 /* Core CSS required for Ionic components to work properly */
@@ -22,7 +27,7 @@ import "./theme/global.css";
 import PageLayout from "./layouts/PageLayout/PageLayout";
 import Sidebar from "./components/sidebar/Sidebar";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import Jobs from "./pages/Jobs/Jobs";
 import Clients from "./pages/Clients/Clients";
 import ClientDetails from "./pages/Clients/ClientDetails";
@@ -33,11 +38,14 @@ import Documents from "./pages/Documents/Documents";
 import { useState } from "react";
 import PageNotFound from "./pages/404/404";
 import WelcomeHelp from "./components/help/WelcomeHelp";
+import { useTaskAlert } from "./components/hooks/useTaskAlert";
 export const GlobalContext = createContext();
 const App = () => {
+  const [present, dismiss] = useIonToast();
   const [user, loading] = useAuthState(firebase.auth());
   const [help, setHelp] = useState(false);
   const [documents, setDocuments] = useState(false);
+  useTaskAlert(present, dismiss);
   return (
     !loading && (
       <GlobalContext.Provider
@@ -59,7 +67,7 @@ const App = () => {
                   <Redirect to={user ? "/welcome" : "/welcome"} />
                 </Route>
                 <Route path="/welcome" exact={true}>
-                  <PageLayout title={"Welcome"} helpComponent={WelcomeHelp}>
+                  <PageLayout helpComponent={WelcomeHelp}>
                     <Welcome user={user} />
                   </PageLayout>
                 </Route>

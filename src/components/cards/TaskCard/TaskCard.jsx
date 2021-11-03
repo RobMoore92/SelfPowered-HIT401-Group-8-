@@ -30,13 +30,13 @@ export default (props) => {
         className={`flex w-full justify-between h-16 rounded-t-md bg-gray-600 items-center p-4`}
       >
         <div className="flex items-center space-x-4">
-          <Subtitle
-            hasHover
-            icon={briefcase}
-            color={"text-blue-400"}
-            textColor={"text-gray-100"}
-            text={item?.job?.title}
-          />
+            <Subtitle
+                hasHover
+                icon={briefcase}
+                color={"text-blue-400"}
+                textColor={"text-gray-100"}
+                text={item?.job?.title}
+            />
 
           <Subtitle
             hasHover

@@ -1,6 +1,6 @@
 import { format, formatDistance, formatDistanceToNow, isPast } from "date-fns";
 
-export const formatDateTime = (date) => format(date, "dd/MM/yyyy HH:mm:ss");
+export const formatDateTime = (date) => format(date, "dd/MM/yy HH:mmaa");
 
 export const formatTimer = (date, completed) => {
   if (completed) {

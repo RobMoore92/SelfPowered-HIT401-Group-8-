@@ -35,7 +35,6 @@ export default (props) => {
   const [user] = useAuthState(firebase.auth());
   const timer = useTimer(dueDateTime, completed);
   const [showDocuments, toggleDocuments] = useState(false);
-  console.log(title);
   return (
     <IonCard>
       <div
@@ -44,36 +43,33 @@ export default (props) => {
           overdue
         )} items-center p-4`}
       >
-        <div className="flex items-center">
-          <Subtitle
-            icon={hourglassOutline}
-            textColor={"text-white"}
-            text={timer}
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <TagsButton />
-          {overdue && !completed && <DueIcon />}
-          <DocumentsButton
-            showDocuments={showDocuments}
-            toggleDocuments={toggleDocuments}
-          />
-          <NavigateButton
-            pathname={"/job"}
-            payload={{ jobDetails: item, title: title }}
-          />
-          <CompletedCheckbox
-            uid={user.uid}
-            id={job_id}
-            completed={completed}
-            {...props}
-          />
-          <JobSettings
-            isPopped={isPopped}
-            setPopped={setPopped}
-            uid={user?.uid}
-            job={item}
-          />
+        <div className="flex items-center justify-between w-full">
+          <div className={"flex items-center space-x-2"}>
+            <TagsButton />
+            {overdue && !completed && <DueIcon />}
+            <DocumentsButton
+              showDocuments={showDocuments}
+              toggleDocuments={toggleDocuments}
+            />
+          </div>
+          <div className={"flex items-center space-x-2"}>
+            <NavigateButton
+              pathname={"/job"}
+              payload={{ jobDetails: item, title: title }}
+            />
+            <CompletedCheckbox
+              uid={user.uid}
+              id={job_id}
+              completed={completed}
+              {...props}
+            />
+            <JobSettings
+              isPopped={isPopped}
+              setPopped={setPopped}
+              uid={user?.uid}
+              job={item}
+            />
+          </div>
         </div>
       </div>
 
@@ -88,10 +84,10 @@ export default (props) => {
 
       <IonCardContent color="light">
         <div className="flex flex-col">
-          <div className={"flex space-x-4"}>
+          <div className={"flex space-x-4 -mb-1 md:mb-0"}>
             <div
               className={
-                "flex items-center sm:space-x-4 justify-between sm:justify-start w-full"
+                "flex items-center sm:space-x-4 md:space-x-8 justify-between sm:justify-start w-full"
               }
             >
               <Subtitle
@@ -108,19 +104,29 @@ export default (props) => {
               />
             </div>
           </div>
+          <Subtitle
+            icon={hourglassOutline}
+            textColor={"text-gray-700"}
+            color={"text-gray-600"}
+            text={timer}
+          />
           {!parent && (
-            <IonText className={"mt-2 text-sm text-gray-600 font-medium"}>
+            <IonText
+              className={
+                "mt-2 text-xs text-gray-600 font-medium uppercase tracking-widest mb-1"
+              }
+            >
               {client_name}
             </IonText>
           )}
           <IonText
             className={`text-2xl text-gray-700 font-semibold leading-right ${
               completed && "line-through"
-            }`}
+            } line-clamp-1`}
           >
             {title}
           </IonText>
-          <IonText className={"text-sm text-gray-600 mt-1"}>
+          <IonText className={"text-sm text-gray-600 mt-1 line-clamp-1"}>
             {description}
           </IonText>
         </div>

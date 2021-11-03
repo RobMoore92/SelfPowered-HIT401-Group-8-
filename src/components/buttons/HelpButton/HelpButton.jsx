@@ -7,12 +7,12 @@ export default ({ setShowHelp }) => {
   };
   return (
     <IonFabButton
+      style={{ "--background": "#1a85ff" }}
       data-testid="help-button"
       onClick={clickHandler}
-      className="h-9 w-9 "
+      className="h-9 w-9"
       shape="round"
       size="small"
-      color="primary"
     >
       <IonIcon color="light" icon={helpCircleOutline} />
     </IonFabButton>
