@@ -106,17 +106,7 @@ export default (props) => {
   ];
   const authPages = [
     {
-<<<<<<< HEAD
       title: "Clients",
-=======
-      title: "Overview",
-      url: "/overview",
-      iosIcon: mailOutline,
-      mdIcon: mailSharp,
-    },
-    {
-      title:  "Clients",
->>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
       url: "/clients",
       iosIcon: personCircleOutline,
       mdIcon: personCircleOutline,
@@ -134,20 +124,12 @@ export default (props) => {
       mdIcon: listOutline,
     },
     {
-<<<<<<< HEAD
       disabled: documents,
       title: "Documents",
       url: "/documents",
       iosIcon: attachOutline,
       mdIcon: attachOutline,
     },
-=======
-      title: "Clients",
-      url: "/clients",
-      iosIcon: heartOutline,
-      mdIcon: heartSharp,
-    }
->>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
   ];
   const displayName = user?.email.replace("@anonymous.com", "");
   console.log(user?.email);
@@ -199,7 +181,6 @@ export default (props) => {
 };
 
 const Pages = ({ pages }) => {
-<<<<<<< HEAD
   return pages.map(
     (page, i) =>
       page.disabled !== false && (
@@ -224,21 +205,4 @@ const Pages = ({ pages }) => {
         </IonMenuToggle>
       )
   );
-=======
-  return pages.map((page, i) => (
-    <IonMenuToggle key={i} autoHide={false}>
-      <IonItem
-        className="ion-padding-horizontal"
-        lines="none"
-        routerLink={page.url}
-        onClick={page?.onClick}
-        routerDirection="none"
-        details={false}
-      >
-        <IonIcon alt slot="start" color="light-tint" ios={page.iosIcon} md={page.mdIcon} />
-        <IonLabel>{page.title}</IonLabel>
-      </IonItem>
-    </IonMenuToggle>
-  ));
->>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
 };

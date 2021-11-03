@@ -91,11 +91,7 @@ export default (props) => {
       .then(() => {
         props.setPopped(false);
         successMessage();
-<<<<<<< HEAD
         history.push("/clients");
-=======
-        history.push("/overview")
->>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
       })
       .catch((e) => {
         errorMessage(e);

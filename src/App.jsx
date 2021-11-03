@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
-=======
-import { Redirect, Route, useHistory } from "react-router-dom";
-import { IonApp, IonButton, IonRouterOutlet, IonSplitPane } from "@ionic/react";
->>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
 import { IonReactRouter } from "@ionic/react-router";
 import firebase from "./firebase/firebase";
 /* Core CSS required for Ionic components to work properly */
@@ -27,7 +22,6 @@ import "./theme/global.css";
 import PageLayout from "./layouts/PageLayout/PageLayout";
 import Sidebar from "./components/sidebar/Sidebar";
 import { useAuthState } from "react-firebase-hooks/auth";
-<<<<<<< HEAD
 import { createContext, useContext } from "react";
 import Jobs from "./pages/Jobs/Jobs";
 import Clients from "./pages/Clients/Clients";
@@ -110,68 +104,6 @@ const App = () => {
           </IonReactRouter>
         </IonApp>
       </GlobalContext.Provider>
-=======
-import Overview from "./pages/Overview/Overview";
-import Jobs from "./pages/Jobs/Jobs";
-import AddJob from "./pages/Jobs/AddJob";
-import Welcome from "./pages/Welcome/Welcome";
-import Clients from "./pages/Clients/Clients";
-import { useEffect } from "react";
-import ClientDetails from "./pages/Clients/ClientDetails";
-import JobDetails from "./pages/Jobs/JobDetails";
-const App = () => {
-  const history = useHistory();
-  const [user, loading] = useAuthState(firebase.auth());
-  return (
-    !loading && (
-      <IonApp>
-        <IonReactRouter>
-          <IonSplitPane contentId="main">
-            <Sidebar user={user} />
-            <IonRouterOutlet id="main">
-              <Route path="/" exact={true}>
-                <Redirect to={user ? "/overview" : "/welcome"} />
-              </Route>
-              <Route path="/welcome" exact={true}>
-                <PageLayout title={"HIT401"}>
-                  <Welcome user={user} />
-                </PageLayout>
-              </Route>
-              <Route path="/overview" exact={true}>
-                <PageLayout title={"Overview"}>
-                  <Overview />
-                </PageLayout>
-              </Route>
-              <Route path="/client" exact={true}>
-                <PageLayout>
-                  <ClientDetails/>
-                </PageLayout>
-              </Route>
-              <Route path="/job" exact={true}>
-                <PageLayout>
-                  <JobDetails/>
-                </PageLayout>
-              </Route>
-              <Route path="/jobs" exact={true}>
-                <PageLayout title={"Jobs"}>
-                  <Jobs />
-                </PageLayout>
-              </Route>
-              <Route path="/add-job" exact={true}>
-                <PageLayout title={"Add Job"}>
-                  <AddJob />
-                </PageLayout>
-              </Route>
-              <Route path="/clients" exact={true}>
-                <PageLayout title={"Clients"}>
-                  <Clients />
-                </PageLayout>
-              </Route>
-            </IonRouterOutlet>
-          </IonSplitPane>
-        </IonReactRouter>
-      </IonApp>
->>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
     )
   );
 };
