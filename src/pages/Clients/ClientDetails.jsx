@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useContext, useEffect, useState } from "react";
 import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -66,3 +67,16 @@ const ClientDetails = (props) => {
 };
 
 export default ClientDetails;
+=======
+import {useHistory} from "react-router-dom";
+
+export default () => {
+    const history = useHistory();
+    const clientDetails = history.location.state;
+    return (
+        <div className="flex flex-grow flex-col justify-between h-full">
+
+        </div>
+    );
+};
+>>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec

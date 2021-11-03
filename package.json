@@ -25,10 +25,14 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+<<<<<<< HEAD
     "chart.js": "^3.5.1",
     "chartjs-plugin-datalabels": "^2.0.0",
     "date-fns": "^2.23.0",
     "file-saver": "^2.0.5",
+=======
+    "date-fns": "^2.23.0",
+>>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
     "firebase": "^8.10.0",
     "firestore": "^1.1.6",
     "formik": "^2.2.9",

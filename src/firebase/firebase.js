@@ -38,7 +38,10 @@ if (!firebase.apps.length) {
 }
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+<<<<<<< HEAD
 export const messaging = firebase.messaging();
 export const storage = firebase.storage();
 
+=======
+>>>>>>> 9e8b36b8532e5afc3f720aa2f0426e27de2c6bec
 export default firebase;
