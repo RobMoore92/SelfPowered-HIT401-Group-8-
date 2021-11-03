@@ -9,7 +9,3 @@
 .google-text {
     @apply ml-4 mr-6;
 }
-
-.error-text {
-    @apply text-xs text-gray-500 mb-2
-}

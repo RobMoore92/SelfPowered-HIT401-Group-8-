@@ -8,12 +8,14 @@
     "@capacitor/core": "3.2.0",
     "@capacitor/haptics": "1.0.2",
     "@capacitor/keyboard": "1.0.2",
+    "@capacitor/push-notifications": "^1.0.6",
     "@capacitor/splash-screen": "^1.1.1",
     "@capacitor/status-bar": "1.0.2",
     "@craco/craco": "^6.2.0",
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
     "@ionic/react-test-utils": "^0.2.0",
+    "@tailwindcss/line-clamp": "^0.2.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -23,11 +25,19 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "chart.js": "^3.5.1",
+    "chartjs-plugin-datalabels": "^2.0.0",
+    "date-fns": "^2.23.0",
+    "file-saver": "^2.0.5",
     "firebase": "^8.10.0",
     "firestore": "^1.1.6",
     "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
+    "fuse.js": "^6.4.6",
+    "fuzzy-search": "^3.2.1",
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
+    "react-chartjs-2": "^3.1.1",
     "react-dom": "^17.0.1",
     "react-firebase-hooks": "^3.0.4",
     "react-router": "^5.2.0",
@@ -53,7 +63,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ionic:build": "craco build",
+    "ionic:serve": "craco start"
   },
   "eslintConfig": {
     "extends": [
@@ -76,7 +88,9 @@
   "devDependencies": {
     "@capacitor/cli": "3.2.0",
     "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.36",
+    "history": "^5.0.1",
+    "postcss": "6.0.14",
+    "prettier": "^2.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7"
   },
   "description": "An Ionic project"

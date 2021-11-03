@@ -8,14 +8,17 @@ export default () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
   const clickHandler = () => {
-    firebase.auth().signOut().then(() => {
-      present({
-        buttons: [{ text: "hide", handler: () => dismiss() }],
-        message: "You have logged out",
-        duration: 2000,
-      })
-    });
-    history.push("/welcome")
+    history.replace("/welcome");
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        present({
+          buttons: [{ text: "hide", handler: () => dismiss() }],
+          message: "You have logged out",
+          duration: 2000,
+        });
+      });
   };
   return (
     <IonFabButton

@@ -2,7 +2,7 @@ import "./Signup.css";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Popover from "../../containers/Popover/Popover";
-import firebase from "../../../firebase/firebase";
+import firebase, { db } from "../../../firebase/firebase";
 import { useHistory } from "react-router";
 
 import {
@@ -57,16 +57,24 @@ export default (props) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, values.password)
-      .then(() => {
-        props.setPopped(false);
-        resetForm({});
-        present({
-          color: "success",
-          buttons: [{ text: "hide", handler: () => dismiss() }],
-          message: "You have successfully logged in",
-          duration: 5000,
-        });
-        history.push("/overview");
+      .then(({ user }) => {
+        db.collection("users")
+          .doc(user.uid)
+          .set({
+            help: true,
+            documents: true,
+          })
+          .then(() => {
+            props.setPopped(false);
+            resetForm({});
+            present({
+              color: "success",
+              buttons: [{ text: "hide", handler: () => dismiss() }],
+              message: "You have successfully logged in",
+              duration: 5000,
+            });
+            history.push("/clients");
+          });
       })
       .catch((e) => {
         resetForm({});
@@ -83,10 +91,11 @@ export default (props) => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validateOnBlur={false}
         onSubmit={onSubmit}
       >
         {({ handleChange, handleSubmit, isValid, dirty, values, errors }) => (
-          <>
+          <form autoComplete="off">
             {!values.email && (
               <IonItem>
                 <IonLabel for="username" position="stacked">
@@ -99,7 +108,11 @@ export default (props) => {
                   type="text"
                   onIonChange={handleChange}
                 />
-                {errors.username && <IonText className="form-error-text">{errors.username}</IonText>}
+                {errors.username && (
+                  <IonText className="form-error-text">
+                    {errors.username}
+                  </IonText>
+                )}
               </IonItem>
             )}
             {!values.username && (
@@ -114,7 +127,9 @@ export default (props) => {
                   type="email"
                   onIonChange={handleChange}
                 />
-                {errors.email && <IonText className="form-error-text">{errors.email}</IonText>}
+                {errors.email && (
+                  <IonText className="form-error-text">{errors.email}</IonText>
+                )}
               </IonItem>
             )}
             <IonItem>
@@ -128,7 +143,9 @@ export default (props) => {
                 type="password"
                 onIonChange={handleChange}
               />
-              {errors.password && <IonText className="form-error-text">{errors.password}</IonText>}
+              {errors.password && (
+                <IonText className="form-error-text">{errors.password}</IonText>
+              )}
             </IonItem>
             <IonItem>
               <IonLabel for="password" position="stacked">
@@ -141,7 +158,9 @@ export default (props) => {
                 type="password"
                 onIonChange={handleChange}
               />
-              {errors.confirm && <IonText className="form-error-text">{errors.confirm}</IonText>}
+              {errors.confirm && (
+                <IonText className="form-error-text">{errors.confirm}</IonText>
+              )}
             </IonItem>
             <div className="button-container">
               <IonButton
@@ -154,7 +173,7 @@ export default (props) => {
                 Signup
               </IonButton>
             </div>
-          </>
+          </form>
         )}
       </Formik>
     </Popover>

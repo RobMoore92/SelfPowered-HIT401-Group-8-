@@ -75,7 +75,7 @@ export default (props) => {
         props.setPopped(false);
         resetForm({});
         successMessage();
-        history.push("/overview");
+        history.push("/clients");
       })
       .catch((e) => {
         resetForm({});
@@ -91,6 +91,7 @@ export default (props) => {
       .then(() => {
         props.setPopped(false);
         successMessage();
+        history.push("/clients");
       })
       .catch((e) => {
         errorMessage(e);
@@ -101,22 +102,30 @@ export default (props) => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        validateOnBlur={false}
         onSubmit={onSubmit}
-        
       >
         {({ handleChange, handleSubmit, isValid, dirty, values, errors }) => (
-          <>
+          <form autoComplete="off">
             {!values.email && (
               <IonItem>
                 <IonLabel for="username" position="stacked">
                   Username
                 </IonLabel>
+                <div style={{ display: "none" }}>
+                  <input
+                    type="text"
+                    id="PreventChromeAutocomplete"
+                    name="PreventChromeAutocomplete"
+                    autoComplete="address-level4"
+                  />
+                </div>
                 <IonInput
-                  data-testid="username-input"
                   value={values.username}
                   name="username"
                   type="text"
                   onIonChange={handleChange}
+                  autocomplete="new-password"
                 />
                 {errors.username && (
                   <IonText className="form-error-text">
@@ -136,6 +145,7 @@ export default (props) => {
                   name="email"
                   type="email"
                   onIonChange={handleChange}
+                  autocomplete="new-password"
                 />
                 {errors.email && (
                   <IonText className="form-error-text">{errors.email}</IonText>
@@ -152,6 +162,7 @@ export default (props) => {
                 value={values.password}
                 name="password"
                 type="password"
+                autocomplete="new-password"
                 onIonChange={handleChange}
               />
               {errors.password && (
@@ -185,7 +196,7 @@ export default (props) => {
                 <span className="google-text"> Sign in with Google</span>
               </IonButton>
             </div>
-          </>
+          </form>
         )}
       </Formik>
     </Popover>

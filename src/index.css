@@ -22,3 +22,9 @@ input:-webkit-autofill {
     -webkit-animation-name: autofill;
     -webkit-animation-fill-mode: both;
 }
+
+.ionic .checkbox input:before,
+.ionic .checkbox-icon:before {
+    background: #d6d6d6;    /* use your color hex instead of #333 */
+    border-color: #333;
+}

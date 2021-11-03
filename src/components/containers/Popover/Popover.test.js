@@ -10,6 +10,6 @@ describe("popover", () => {
       </Popover>
     );
     expect(getByTestId("popover"));
-    expect(getByTestId("test")).toHaveTextContent("test")
+    expect(getByTestId("test")).toHaveTextContent("test");
   });
 });

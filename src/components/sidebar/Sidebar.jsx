@@ -10,7 +10,14 @@ import {
   IonNote,
   IonLabel,
 } from "@ionic/react";
-import { logoIonic } from "ionicons/icons";
+import {
+  attachOutline,
+  briefcaseOutline,
+  homeOutline,
+  listOutline,
+  logoIonic,
+  personCircleOutline,
+} from "ionicons/icons";
 import {
   mailOutline,
   mailSharp,
@@ -18,33 +25,54 @@ import {
   paperPlaneSharp,
   heartOutline,
   heartSharp,
-  archiveOutline,
-  archiveSharp,
 } from "ionicons/icons";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Login from "../auth/Login/Login";
 import Signup from "../auth/Signup/Signup";
-import firebase from "../../firebase/firebase";
-
-export default ({ user }) => {
+import firebase, { db } from "../../firebase/firebase";
+import SettingsPopover from "../popovers/SettingsPopover";
+import { useLocation } from "react-router";
+import { getUserData } from "../../firebase/queries/userQueries";
+import { GlobalContext } from "../../App";
+import AccountPopover from "../popovers/AccountPopover";
+export default (props) => {
+  const location = useLocation();
+  const { user, setHelp, documents, setDocuments } = useContext(GlobalContext);
+  const [refresh, setRefresh] = useState(false);
   const [loginPopped, setLoginPopped] = useState(false);
   const [signupPopped, setSignupPopped] = useState(false);
+  const [settingsPopped, setSettingsPopped] = useState(false);
+  const [accountPopped, setAccountPopped] = useState(false);
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid).then((snap) => {
+        const results = snap.data();
+        setHelp(results?.help);
+        setDocuments(results?.documents);
+        setRefresh(!refresh);
+      });
+    }
+  }, [user, location]);
   const settingPages = [
     {
       title: "Account",
-      url: "/account",
+      onClick: () => {
+        setAccountPopped(!accountPopped);
+      },
       iosIcon: mailOutline,
       mdIcon: mailSharp,
     },
     {
       title: "Settings",
-      url: "/settings",
+      onClick: () => {
+        setSettingsPopped(!settingsPopped);
+      },
       iosIcon: paperPlaneOutline,
       mdIcon: paperPlaneSharp,
     },
     {
       title: "About",
-      url: "/abouts",
+      url: "/about",
       iosIcon: heartOutline,
       mdIcon: heartSharp,
     },
@@ -64,13 +92,11 @@ export default ({ user }) => {
       onClick: () => {
         setLoginPopped(true);
       },
-      url: "/welcome",
       iosIcon: mailOutline,
       mdIcon: mailSharp,
     },
     {
       title: "Signup",
-      url: "/welcome",
       onClick: () => {
         setSignupPopped(true);
       },
@@ -80,31 +106,33 @@ export default ({ user }) => {
   ];
   const authPages = [
     {
-      title: "Overview",
-      url: "/overview",
-      iosIcon: mailOutline,
-      mdIcon: mailSharp,
-    },
-    {
       title: "Clients",
       url: "/clients",
-      iosIcon: paperPlaneOutline,
-      mdIcon: paperPlaneSharp,
+      iosIcon: personCircleOutline,
+      mdIcon: personCircleOutline,
     },
     {
       title: "Jobs",
       url: "/jobs",
-      iosIcon: heartOutline,
-      mdIcon: heartSharp,
+      iosIcon: briefcaseOutline,
+      mdIcon: briefcaseOutline,
     },
     {
-      title: "Tags",
-      url: "/tags",
-      iosIcon: archiveOutline,
-      mdIcon: archiveSharp,
+      title: "Tasks",
+      url: "/tasks",
+      iosIcon: listOutline,
+      mdIcon: listOutline,
+    },
+    {
+      disabled: documents,
+      title: "Documents",
+      url: "/documents",
+      iosIcon: attachOutline,
+      mdIcon: attachOutline,
     },
   ];
   const displayName = user?.email.replace("@anonymous.com", "");
+  console.log(user?.email);
   return (
     <IonMenu data-testid="sidebar" contentId="main" type="overlay">
       <IonContent>
@@ -112,11 +140,16 @@ export default ({ user }) => {
           <IonList id="inbox-list">
             <IonIcon className="sidebar-icon" size="large" icon={logoIonic} />
             <IonListHeader className="sidebar-title">Application</IonListHeader>
-            {user && <IonNote color="light-tint" className="sidebar-note">{displayName}</IonNote>}
+            {user && (
+              <IonNote color="light-tint" className="sidebar-note">
+                {displayName}
+              </IonNote>
+            )}
             <div className="sidebar-top-list">
               <Pages pages={user ? authPages : unauthPages} />
             </div>
           </IonList>
+
           {user && (
             <IonList>
               <IonListHeader>Settings</IonListHeader>
@@ -129,23 +162,47 @@ export default ({ user }) => {
       </IonContent>
       <Login isPopped={loginPopped} setPopped={setLoginPopped} />
       <Signup isPopped={signupPopped} setPopped={setSignupPopped} />
+      <SettingsPopover
+        isPopped={settingsPopped}
+        setPopped={setSettingsPopped}
+        refresh={refresh}
+        setRefresh={setRefresh}
+        {...props}
+      />
+      <AccountPopover
+        isPopped={accountPopped}
+        setPopped={setAccountPopped}
+        refresh={refresh}
+        setRefresh={setRefresh}
+        {...props}
+      />
     </IonMenu>
   );
 };
 
 const Pages = ({ pages }) => {
-  return pages.map((page, i) => (
-    <IonMenuToggle key={i} autoHide={false}>
-      <IonItem
-        lines="none"
-        routerLink={page.url}
-        onClick={page?.onClick}
-        routerDirection="none"
-        details={false}
-      >
-        <IonIcon alt slot="start" color="light-tint" ios={page.iosIcon} md={page.mdIcon} />
-        <IonLabel>{page.title}</IonLabel>
-      </IonItem>
-    </IonMenuToggle>
-  ));
+  return pages.map(
+    (page, i) =>
+      page.disabled !== false && (
+        <IonMenuToggle key={i} autoHide={false}>
+          <IonItem
+            className="ion-padding-horizontal cursor-pointer"
+            lines="none"
+            routerLink={page.url}
+            onClick={page?.onClick}
+            routerDirection="none"
+            details={false}
+          >
+            <IonIcon
+              alt
+              slot="start"
+              color="light-tint"
+              ios={page.iosIcon}
+              md={page.mdIcon}
+            />
+            <IonLabel>{page.title}</IonLabel>
+          </IonItem>
+        </IonMenuToggle>
+      )
+  );
 };
