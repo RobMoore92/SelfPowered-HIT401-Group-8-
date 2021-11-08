@@ -2,23 +2,20 @@ import "./PageLayout.css";
 import {
   IonButtons,
   IonContent,
-  IonFabButton,
   IonHeader,
-  IonIcon,
   IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, useLocation } from "react-router";
-import firebase from "../../firebase/firebase";
-import LogoutButton from "../../components/buttons/LogoutButton/LogoutButton";
 import { cloneElement, useContext, useEffect, useState } from "react";
-import { addOutline, arrowBackOutline } from "ionicons/icons";
 import { Redirect } from "react-router-dom";
 import { GlobalContext } from "../../App";
+import LogoutButton from "../../components/buttons/LogoutButton/LogoutButton";
 import HelpButton from "../../components/buttons/HelpButton/HelpButton";
+import BackButton from "../../components/buttons/BackButton/BackButton";
+import AddButton from "../../components/buttons/AddButton/AddButton";
 
 export default ({
   privateRoute,
@@ -31,12 +28,13 @@ export default ({
 }) => {
   const history = useHistory();
   const location = useLocation();
-  const { user, loading, help } = useContext(GlobalContext);
+  const { user, loading } = useContext(GlobalContext);
   const [loaded, setLoaded] = useState(false);
   const [authed, setAuthed] = useState(false);
   const [isPopped, setPopped] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const payload = history.location.state;
+
   useEffect(() => {
     if (!loading) {
       setLoaded(true);
@@ -45,6 +43,7 @@ export default ({
       }
     }
   }, [user, loading, history, location]);
+
   return (
     loaded && (
       <div>
@@ -54,45 +53,13 @@ export default ({
               <IonToolbar color={"none"} className={""}>
                 <div className={"flex items-center"}>
                   <IonMenuButton color={"dark"} />
-
                   <IonTitle className="text-2xl ml-2 font-medium text-gray-100 line-clamp-1">
                     {payloadTitle ? payload?.title : title}
                   </IonTitle>
                 </div>
-
                 <IonButtons slot="end" className="mr-0 sm:mr-3">
-                  {showBack && (
-                    <IonFabButton
-                      style={{ "--background": "#e6e6e6" }}
-                      slot="end"
-                      className="menu-button"
-                      size="small"
-                      onClick={() => {
-                        history.back();
-                      }}
-                    >
-                      <IonIcon
-                        className={"menu-button-icon text-gray-700"}
-                        icon={arrowBackOutline}
-                      />
-                    </IonFabButton>
-                  )}
-                  {showAdd && (
-                    <IonFabButton
-                      style={{ "--background": "#46d530" }}
-                      slot="end"
-                      className="menu-button"
-                      size="small"
-                      onClick={() => {
-                        setPopped(true);
-                      }}
-                    >
-                      <IonIcon
-                        className={"menu-button-icon"}
-                        icon={addOutline}
-                      />
-                    </IonFabButton>
-                  )}
+                  {showBack && <BackButton />}
+                  {showAdd && <AddButton setPopped={setPopped} />}
                   {helpComponent && <HelpButton setShowHelp={setShowHelp} />}
                   {user && <LogoutButton />}
                 </IonButtons>

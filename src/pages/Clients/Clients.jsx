@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getClients } from "../../firebase/queries/clientQueries";
-import ListLayout from "../../layouts/ListLayout";
+import ListLayout from "../../layouts/ListLayout/ListLayout";
 import ClientCard from "../../components/cards/ClientCard/ClientCard";
 import AddClient from "../../components/form/AddClient";
 
@@ -39,7 +39,7 @@ const Clients = (props) => {
         searchProperties={searchProperties}
         Card={ClientCard}
         cardID={"client_id"}
-        noDataMessage={"There is no client"}
+        noDataMessage={"There are currently no clients, you can add one above."}
       />
       <AddClient {...props} />
     </>

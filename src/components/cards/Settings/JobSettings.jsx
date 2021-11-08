@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { deleteJob } from "../../../firebase/queries/jobQueries";
 import { useIonToast } from "@ionic/react";
-import Popover from "../../containers/Popover/Popover";
+import Popover from "../../popovers/PopoverContainer/PopoverContainer";
 import SettingsButton from "../../buttons/SettingsButton/SettingsButton";
 import EditButton from "../../buttons/EditButton/EditButton";
 import DeleteButton from "../../buttons/DeleteButton/DeleteButton";

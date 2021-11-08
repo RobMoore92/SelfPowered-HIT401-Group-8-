@@ -4,6 +4,7 @@ import Login from "../../components/auth/Login/Login";
 import Signup from "../../components/auth/Signup/Signup";
 import WelcomeHelp from "../../components/help/WelcomeHelp";
 import selfpoweredLogo from "../../images/selfpowered.png";
+
 export default ({ user, token, showHelp, setShowHelp }) => {
   const [loginPopover, setLoginPopover] = useState(false);
   const [signupPopover, setSignupPopover] = useState(false);
@@ -13,12 +14,18 @@ export default ({ user, token, showHelp, setShowHelp }) => {
         <img
           alt={"selfpowered logo"}
           src={selfpoweredLogo}
-          className={"w-full px-8 mx-auto"}
+          className={"w-full px-8 mx-auto mb-8"}
         />
+
+        <p className={"text-gray-700 font-bold text-center max-w-md mx-auto"}>
+          A time management application focused on freelancers, contractors and
+          the self-employed
+        </p>
+
         <Login isPopped={loginPopover} setPopped={setLoginPopover} />
         <Signup isPopped={signupPopover} setPopped={setSignupPopover} />
         <WelcomeHelp isPopped={showHelp} setPopped={setShowHelp} />
-        <div className="mx-auto justify-center flex space-x-4 mt-16">
+        <div className="mx-auto justify-center flex space-x-4 mt-8">
           <IonButton
             className="auth-button"
             onClick={() => {

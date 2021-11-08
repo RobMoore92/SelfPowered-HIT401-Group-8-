@@ -13,7 +13,6 @@ import Subtitle from "../Subtitle";
 import DueIcon from "../../buttons/DueIcon/DueIcon";
 import { cardColor } from "../../../helpers/cardColor";
 import TaskSettings from "../Settings/TaskSettings";
-import { useState } from "react";
 
 export default (props) => {
   const { item, isPopped, setPopped, refresh, setRefresh } = props;
@@ -22,7 +21,7 @@ export default (props) => {
   const formattedStart = new Date(start.seconds * 1000);
   const formattedDue = new Date(due.seconds * 1000);
   const overdue = isPast(formattedDue);
-  const timer = useTimer(formattedDue, completed);
+  const timer = useTimer(formattedDue, completed, item);
 
   return (
     <IonCard>
@@ -30,13 +29,13 @@ export default (props) => {
         className={`flex w-full justify-between h-16 rounded-t-md bg-gray-600 items-center p-4`}
       >
         <div className="flex items-center space-x-4">
-            <Subtitle
-                hasHover
-                icon={briefcase}
-                color={"text-blue-400"}
-                textColor={"text-gray-100"}
-                text={item?.job?.title}
-            />
+          <Subtitle
+            hasHover
+            icon={briefcase}
+            color={"text-blue-400"}
+            textColor={"text-gray-100"}
+            text={item?.job?.title}
+          />
 
           <Subtitle
             hasHover

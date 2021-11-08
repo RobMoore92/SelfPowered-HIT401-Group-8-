@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "../../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { IonCard, IonCardContent, IonText } from "@ionic/react";
@@ -6,6 +6,8 @@ import { calendarOutline, hourglassOutline } from "ionicons/icons";
 import { isPast } from "date-fns";
 import { cardColor } from "../../../helpers/cardColor";
 import { formatDateTime } from "../../../helpers/formatHelper";
+import { getTagsByJob } from "../../../firebase/queries/tagQueries";
+import { useLocation } from "react-router";
 import Tag from "../../tags/Tag";
 import DueIcon from "../../buttons/DueIcon/DueIcon";
 import NavigateButton from "../../buttons/NavigateButton/NavigateButton";
@@ -16,25 +18,28 @@ import DocumentsButton from "../../buttons/DocumentsButton/DocumentsButton";
 import TagsButton from "../../buttons/TagsButton/TagsButton";
 import DocumentsPopover from "../../popovers/DocumentsPopover";
 import useTimer from "../../hooks/useTimer";
+import TagPopover from "../../tags/TagPopover";
 
 export default (props) => {
   const { item, isPopped, setPopped, parent } = props;
-  const {
-    client_name,
-    job_id,
-    start,
-    due,
-    completed,
-    title,
-    description,
-    tags,
-  } = item;
+  const { client_name, job_id, start, due, completed, title, description } =
+    item;
   const startDateTime = new Date(start.seconds * 1000);
   const dueDateTime = new Date(due.seconds * 1000);
   const overdue = isPast(dueDateTime);
+  const location = useLocation();
   const [user] = useAuthState(firebase.auth());
-  const timer = useTimer(dueDateTime, completed);
+  const timer = useTimer(dueDateTime, completed, item);
+  const [showTags, toggleTags] = useState(false);
   const [showDocuments, toggleDocuments] = useState(false);
+  const [tagList, setTagList] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      getTagsByJob(user, job_id, setTagList);
+    }
+  }, [user, location]);
+
   return (
     <IonCard>
       <div
@@ -45,7 +50,7 @@ export default (props) => {
       >
         <div className="flex items-center justify-between w-full">
           <div className={"flex items-center space-x-2"}>
-            <TagsButton />
+            <TagsButton toggleTags={toggleTags} />
             {overdue && !completed && <DueIcon />}
             <DocumentsButton
               showDocuments={showDocuments}
@@ -73,12 +78,21 @@ export default (props) => {
         </div>
       </div>
 
-      {showDocuments && (
+      {showDocuments && user && (
         <DocumentsPopover
           isPopped={showDocuments}
           setPopped={toggleDocuments}
           uid={user.uid}
           id={job_id}
+        />
+      )}
+
+      {showTags && user && (
+        <TagPopover
+          user={user}
+          job_id={job_id}
+          isPopped={showTags}
+          setPopped={toggleTags}
         />
       )}
 
@@ -126,20 +140,20 @@ export default (props) => {
           >
             {title}
           </IonText>
-          <IonText className={"text-sm text-gray-600 mt-1 line-clamp-1"}>
+          <IonText className={"text-sm text-gray-600 mt-1 line-clamp-2"}>
             {description}
           </IonText>
         </div>
-        {tags && (
-          <div className="mt-5">
-            {tags.map(({ id, icon, name, chipColor, iconColor }) => {
+        {tagList.length > 0 && (
+          <div className="mt-2 flex items-center overflow-x-scroll pb-2">
+            {tagList.map((item, i) => {
               return (
                 <Tag
-                  key={id}
-                  icon={icon}
-                  name={name}
-                  chipColor={chipColor}
-                  iconColor={iconColor}
+                  user={user}
+                  job_id={job_id}
+                  tag_id={item.tag_id}
+                  key={i.toString()}
+                  {...item}
                 />
               );
             })}

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { IonList, IonSearchbar } from "@ionic/react";
-import SearchFilter from "../components/cards/SearchFilter";
-import { AnimatePresence, motion } from "framer-motion";
 import FuzzySearch from "fuzzy-search";
-import NoData from "../components/cards/NoData";
+import { IonList, IonSearchbar } from "@ionic/react";
+import { AnimatePresence, motion } from "framer-motion";
+import SearchFilter from "../../components/cards/SearchFilter";
+import NoData from "../../components/cards/NoData";
 
 const variants = {
   enter: {

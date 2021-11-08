@@ -1,5 +1,5 @@
-import { IonFabButton, IonIcon } from "@ionic/react";
-import { arrowForward, chevronDownCircle, chevronForward, chevronForwardCircle } from "ionicons/icons";
+import { IonIcon } from "@ionic/react";
+import { chevronForwardCircle } from "ionicons/icons";
 import Tag from "./Tag";
 
 export default ({ tags }) => {

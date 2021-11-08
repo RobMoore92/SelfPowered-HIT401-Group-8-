@@ -7,27 +7,25 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import firebase from "./firebase/firebase";
-/* Core CSS required for Ionic components to work properly */
+//ionic imports
 import "@ionic/react/css/core.css";
-/* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
-
-/* Optional CSS utils that can be commented out */
 import "@ionic/react/css/padding.css";
 import "@ionic/react/css/float-elements.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-/* Theme variables */
+//styles
 import "./theme/variables.css";
 import "./theme/global.css";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { createContext, useState } from "react";
 import PageLayout from "./layouts/PageLayout/PageLayout";
 import Sidebar from "./components/sidebar/Sidebar";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { createContext, useContext, useEffect } from "react";
 import Jobs from "./pages/Jobs/Jobs";
 import Clients from "./pages/Clients/Clients";
 import ClientDetails from "./pages/Clients/ClientDetails";
@@ -35,21 +33,32 @@ import JobDetails from "./pages/Jobs/JobDetails";
 import Welcome from "./pages/Welcome/Welcome";
 import Tasks from "./pages/Tasks/Tasks";
 import Documents from "./pages/Documents/Documents";
-import { useState } from "react";
 import PageNotFound from "./pages/404/404";
 import WelcomeHelp from "./components/help/WelcomeHelp";
 import { useTaskAlert } from "./components/hooks/useTaskAlert";
-export const GlobalContext = createContext();
+import { useIsOnline } from "./components/hooks/useIsOffline";
+
+export const GlobalContext = createContext(undefined);
+
 const App = () => {
   const [present, dismiss] = useIonToast();
   const [user, loading] = useAuthState(firebase.auth());
   const [help, setHelp] = useState(false);
   const [documents, setDocuments] = useState(false);
   useTaskAlert(present, dismiss);
+  const isOnline = useIsOnline();
   return (
     !loading && (
       <GlobalContext.Provider
-        value={{ user, loading, help, setHelp, documents, setDocuments }}
+        value={{
+          user,
+          loading,
+          help,
+          setHelp,
+          documents,
+          setDocuments,
+          isOnline,
+        }}
       >
         <IonApp>
           <IonReactRouter>

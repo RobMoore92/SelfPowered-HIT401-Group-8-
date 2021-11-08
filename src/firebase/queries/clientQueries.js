@@ -21,6 +21,18 @@ export const getClients = (uid, setClients, showInactive, orderCompany) => {
     setClients(data);
   });
 };
+export const deleteAllClients = (uid) => {
+  return db
+    .collection("users")
+    .doc(uid)
+    .collection("client")
+    .get()
+    .then((snap) => {
+      snap.forEach(async (doc) => {
+        await doc.ref.delete();
+      });
+    });
+};
 
 export const getClientNames = (uid, setClients) => {
   const query = db.collection("users").doc(uid).collection("clients");

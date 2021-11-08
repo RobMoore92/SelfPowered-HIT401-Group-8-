@@ -1,10 +1,16 @@
 import React from "react";
 import { IonButton, IonIcon } from "@ionic/react";
-import { documents, pricetagOutline } from "ionicons/icons";
+import { pricetagOutline } from "ionicons/icons";
 
-const TagsButton = () => {
+const TagsButton = ({ toggleTags }) => {
   return (
-    <IonButton className={"ion-no-padding"} fill="clear" onClick={() => {}}>
+    <IonButton
+      className={"ion-no-padding"}
+      fill="clear"
+      onClick={() => {
+        toggleTags(true);
+      }}
+    >
       <IonIcon className={`text-xl text-white `} icon={pricetagOutline} />
     </IonButton>
   );

@@ -1,4 +1,4 @@
-import { IonList, IonFabButton, IonIcon } from "@ionic/react";
+import { IonFabButton, IonIcon } from "@ionic/react";
 import * as icons from "ionicons/icons";
 
 export default ({ values, setFieldValue }) => {
@@ -11,7 +11,7 @@ export default ({ values, setFieldValue }) => {
             name="icon"
             color={values?.icon === icon ? "primary" : "contrast"}
             onClick={() => {
-              if(values.icon === icon) {
+              if (values.icon === icon) {
                 setFieldValue("icon", "");
               } else {
                 setFieldValue("icon", icon);

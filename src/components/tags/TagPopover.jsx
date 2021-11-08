@@ -1,119 +1,53 @@
 import "./TagPopover.css";
 import {
-  IonCard,
+  IonButton,
   IonFabButton,
   IonIcon,
   IonInput,
   IonItem,
-  IonLabel,
-  IonNote,
   IonText,
-  IonTitle,
 } from "@ionic/react";
+import * as icons from "ionicons/icons";
 import {
   add,
   addCircle,
   arrowBack,
-  book,
   checkmarkOutline,
-  happy,
-  warningSharp,
+  trashOutline,
 } from "ionicons/icons";
-import { useState } from "react";
-import Popover from "../containers/Popover/Popover";
+import { useEffect, useState } from "react";
+import Popover from "../popovers/PopoverContainer/PopoverContainer";
 import IconList from "./IconList";
-import Tag from "./Tag";
 import { Formik } from "formik";
 import * as yup from "yup";
-const tags = [
-  {
-    id: "1",
-    name: "Important",
-    icon: warningSharp,
-    chipColor: "bg-gray-200",
-    iconColor: "text-red-600",
-  },
-  {
-    id: "2",
-    name: "Research",
-    icon: book,
-    chipColor: "bg-gray-200",
-    iconColor: "text-blue-500",
-  },
-  {
-    id: "3",
-    name: "Important",
-    icon: warningSharp,
-    chipColor: "bg-gray-200",
-    iconColor: "text-red-600",
-  },
-  {
-    id: "4",
-    name: "Ressss",
-    icon: book,
-    chipColor: "bg-gray-200",
-    iconColor: "text-blue-500",
-  },
-  {
-    id: "5",
-    name: "Re",
-    icon: warningSharp,
-    chipColor: "bg-gray-200",
-    iconColor: "text-red-600",
-  },
-  {
-    id: "6",
-    name: "Resssssssssss",
-    icon: book,
-    chipColor: "bg-gray-200",
-    iconColor: "text-blue-500",
-  },
-  {
-    id: "7",
-    name: "Important",
-    icon: warningSharp,
-    chipColor: "bg-gray-200",
-    iconColor: "text-red-600",
-  },
-  {
-    id: "8",
-    name: "Ress",
-    icon: book,
-    chipColor: "bg-gray-200",
-    iconColor: "text-blue-500",
-  },
-  {
-    id: "9",
-    name: "Important",
-    icon: warningSharp,
-    chipColor: "bg-gray-200",
-    iconColor: "text-red-600",
-  },
-  {
-    id: "10",
-    name: "Res",
-    icon: book,
-    chipColor: "bg-gray-200",
-    iconColor: "text-blue-500",
-  },
-];
-
-const initialValues = {
-  name: "",
-  icon: "",
-};
-
-const validationSchema = yup.object().shape({
-  name: yup.string().required(),
-  icon: yup.string().required(),
-});
-
-const onSubmit = (values) => {
-  console.log(values);
-};
+import { db } from "../../firebase/firebase";
+import {
+  deleteTag,
+  getAllTags,
+  insertTag,
+} from "../../firebase/queries/tagQueries";
 
 export default (props) => {
+  const { user, job_id } = props;
+  const [tags, setTags] = useState([]);
   const [addTag, setAddTag] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    getAllTags(user, setTags);
+  }, [addTag, refresh]);
+  const initialValues = {
+    name: "",
+    icon: "",
+  };
+
+  const validationSchema = yup.object().shape({
+    name: yup.string().required(),
+    icon: yup.string().required(),
+  });
+  const onSubmit = (values) => {
+    insertTag(user, values, setAddTag);
+  };
+
   return (
     <Popover {...props}>
       <Formik
@@ -121,16 +55,17 @@ export default (props) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, handleChange, setFieldValue, handleSubmit }) => {
+        {({ values, errors, handleChange, setFieldValue, handleSubmit }) => {
           return (
             <div>
               <div className="flex justify-between items-center">
-                <IonText className="text-2xl font-medium">{addTag ? "Add Tag" : "Tags"}</IonText>
+                <IonText className="text-2xl font-medium">
+                  {addTag ? "Add Tag" : "Tags"}
+                </IonText>
                 <IonFabButton
                   size="small"
                   color="light"
                   onClick={() => {
-                    console.log(123);
                     setAddTag(!addTag);
                   }}
                 >
@@ -144,28 +79,37 @@ export default (props) => {
               {addTag ? (
                 <div className="mt-4">
                   <div className="flex justify-between items-center">
-                    <IonItem
-                      lines="none"
-                      className={"ion-no-padding flex-grow"}
-                    >
-                      <IonInput
-                        name="name"
-                        value={values.name}
-                        onKeyPress={(e) => {
-                          if (e.key === "Enter") {
-                            handleSubmit();
-                          }
-                        }}
-                        onIonChange={handleChange}
-                        placeholder="Tag name"
-                      />
-                    </IonItem>
+                    <div>
+                      <IonItem
+                        lines="none"
+                        className={"ion-no-padding flex-grow"}
+                      >
+                        <IonInput
+                          name="name"
+                          value={values.name}
+                          onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                              handleSubmit();
+                            }
+                          }}
+                          onIonChange={handleChange}
+                          placeholder="Tag name"
+                        />
+                      </IonItem>
+                      <div className={"flex flex-col"}>
+                        <IonText className={"form-error-text"}>
+                          {errors.icon}
+                        </IonText>
+                        <IonText className={"form-error-text"}>
+                          {errors.name}
+                        </IonText>
+                      </div>
+                    </div>
                     <IonFabButton
                       size="small"
                       color="success"
                       onClick={() => {
-                        console.log(123);
-                        setAddTag(!addTag);
+                        handleSubmit();
                       }}
                     >
                       <IonIcon
@@ -179,26 +123,67 @@ export default (props) => {
                   <IconList values={values} setFieldValue={setFieldValue} />
                 </div>
               ) : (
-                <div className="mt-6 h-96 overflow-y-scroll">
-                  {tags.map(({ id, name, icon, iconColor }, i) => {
+                <div className="mt-4 h-96 overflow-y-scroll">
+                  {tags.map((item, i) => {
+                    const { task_id, name, icon } = item;
                     return (
                       <IonItem
                         lines="none"
                         color="light"
-                        key={id}
-                        className={`h-12 w-full rounded flex items-center py-1 ${
-                          i === tags.length - 1 ? "mb-0" : "mb-2"
-                        }`}
+                        className={`h-12 w-full rounded`}
                       >
-                        <IonInput
-                          readonly
-                          className="border-none"
-                          value={name}
-                        />
-                        <IonIcon
-                          className={`text-xl ${iconColor}`}
-                          icon={icon}
-                        />
+                        <div
+                          className={
+                            "flex justify-between w-full items-center py-1"
+                          }
+                        >
+                          <div className={"flex items-center"}>
+                            <IonIcon
+                              className={`text-lg text-blue-500 mx-3`}
+                              icon={icons[icon]}
+                            />
+                            <IonText className="border-none line-clamp-1">
+                              {name}
+                            </IonText>
+                          </div>
+                          <div className={"flex space-x-2"}>
+                            <IonButton
+                              fill={"clear"}
+                              size={"small"}
+                              className={"ion-no-padding"}
+                              onClick={async () => {
+                                await db
+                                  .collection("users")
+                                  .doc(user.uid)
+                                  .collection("jobs")
+                                  .doc(job_id)
+                                  .collection("jobTags")
+                                  .add({
+                                    ...item,
+                                  });
+                              }}
+                            >
+                              <IonIcon
+                                className={`text-1xl text-blue-500`}
+                                icon={addCircle}
+                              />
+                            </IonButton>
+                            <IonButton
+                              fill={"clear"}
+                              className={"ion-no-padding z-10"}
+                              onClick={() => {
+                                deleteTag(user, job_id, task_id).then(() => {
+                                  setRefresh(!refresh);
+                                });
+                              }}
+                            >
+                              <IonIcon
+                                className={`text-1xl text-blue-500`}
+                                icon={trashOutline}
+                              />
+                            </IonButton>
+                          </div>
+                        </div>
                       </IonItem>
                     );
                   })}

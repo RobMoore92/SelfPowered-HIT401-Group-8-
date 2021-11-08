@@ -1,9 +1,9 @@
-.popover-wrapper .popover-content{
+.popover-wrapper .popover-content {
     position: relative !important;
     margin: 0 auto !important;
     left: auto !important;
     top: auto !important;
-    @apply w-72 sm:w-96 p-4 ;
+    @apply w-80 sm:w-96 p-4 ;
 }
 
 .list-md {

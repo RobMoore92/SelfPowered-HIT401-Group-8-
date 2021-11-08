@@ -1,14 +1,6 @@
 import { db } from "../firebase";
-import firebase from "../../firebase/firebase";
 
-export const getTasks = (
-  uid,
-  setTasks,
-  orderByName,
-  hideCompleted,
-  refresh,
-  setRefresh
-) => {
+export const getTasks = (uid, setTasks, orderByName, hideCompleted) => {
   let query = db.collectionGroup("tasks");
   if (hideCompleted) {
     query = query.where("completed", "==", false);
@@ -27,6 +19,21 @@ export const getTasks = (
     });
     const filteredData = data.filter((el) => el != null);
     setTasks(filteredData);
+  });
+};
+
+export const getAllTasks = (setTasks, user) => {
+  db.collectionGroup("tasks").onSnapshot(async (snap) => {
+    const temp = [];
+    snap.docs.forEach((doc) => {
+      if (doc.ref.parent.parent.parent.parent.id === user.uid) {
+        temp.push({
+          task: doc.data().task,
+          due: new Date(doc.data().due?.seconds * 1000),
+        });
+      }
+    });
+    setTasks(temp);
   });
 };
 
@@ -138,14 +145,7 @@ export const editTask = (
     });
 };
 
-export const completeTask = (
-  uid,
-  job_id,
-  task_id,
-  completed,
-  refresh,
-  setRefresh
-) => {
+export const completeTask = (uid, job_id, task_id, completed) => {
   db.collection("users")
     .doc(uid)
     .collection("jobs")
@@ -166,5 +166,33 @@ export const deleteTask = (uid, job_id, task_id, refresh, setRefresh) => {
     .delete()
     .then(() => {
       setRefresh(!refresh);
+    });
+};
+
+export const deleteAllTasks = (uid, job_id) => {
+  console.log("deleting tasks");
+  return db
+    .collection("users")
+    .doc(uid)
+    .collection("jobs")
+    .doc(job_id)
+    .collection("tasks")
+    .get()
+    .then((snap) => {
+      snap.forEach(async (doc) => {
+        await doc.ref.delete();
+      });
+    });
+};
+
+export const deleteAllAccountTasks = (uid) => {
+  db.collectionGroup("tasks")
+    .get()
+    .then((snap) => {
+      snap.forEach((task) => {
+        if (task.ref.parent.parent.parent.parent.id === uid) {
+          task.ref.delete();
+        }
+      });
     });
 };

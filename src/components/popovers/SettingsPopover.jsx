@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import Popover from "../containers/Popover/Popover";
+import Popover from "./PopoverContainer/PopoverContainer";
 import {
   IonIcon,
   IonItem,
@@ -9,8 +9,6 @@ import {
   IonToggle,
 } from "@ionic/react";
 import { attachOutline, helpCircleOutline } from "ionicons/icons";
-import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "../../firebase/firebase";
 import { useLocation } from "react-router";
 import {
   getUserData,

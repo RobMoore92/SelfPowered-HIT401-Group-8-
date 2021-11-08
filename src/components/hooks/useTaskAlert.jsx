@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useIonToast } from "@ionic/react";
-import firebase, { db } from "../../firebase/firebase";
-import { getTasks } from "../../firebase/queries/taskQueries";
+import firebase from "../../firebase/firebase";
+import { getAllTasks } from "../../firebase/queries/taskQueries";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { differenceInMinutes } from "date-fns";
 
 export const useTaskAlert = (present, dismiss) => {
   const [user, loading] = useAuthState(firebase.auth());
   const [tasks, setTasks] = useState([]);
-  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     if (user) {
-      db.collectionGroup("tasks").onSnapshot(async (snap) => {
-        const temp = [];
-        snap.docs.forEach((doc) => {
-          if (doc.ref.parent.parent.parent.parent.id === user.uid) {
-            temp.push({
-              task: doc.data().task,
-              due: new Date(doc.data().due.seconds * 1000),
-            });
-          }
-        });
-        setTasks(temp);
-      });
+      getAllTasks(setTasks, user);
     }
   }, [user]);
   useEffect(() => {

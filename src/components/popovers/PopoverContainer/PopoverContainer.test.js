@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import Popover from "./Popover";
+import Popover from "./PopoverContainer";
 
 describe("popover", () => {
   test("elements render correctly", async () => {

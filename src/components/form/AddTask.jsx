@@ -4,12 +4,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import TextInput from "../../components/form/TextInput";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Popover from "../containers/Popover/Popover";
+import Popover from "../popovers/PopoverContainer/PopoverContainer";
 import DateTimeInput from "./DateTimeInput";
 
 import { formatISO, parseISO } from "date-fns";
 import { addTask, editTask } from "../../firebase/queries/taskQueries";
-import { useEffect, useState } from "react";
 
 export default (props) => {
   const { refresh, setRefresh } = props;
@@ -37,12 +36,13 @@ export default (props) => {
     task: yup.string().required(),
     start: yup
       .date()
-      .min(formattedJobStart, "task start date cannot be before job start date")
-      .max(formattedJobDue, "task start date cannot be after job due date"),
+      .min(
+        formattedJobStart,
+        "task start date cannot be before job start date"
+      ),
     due: yup
       .date()
-      .min(yup.ref("start"), "task end date can't be before task start date")
-      .max(formattedJobDue, "task due date cannot be after job due date"),
+      .min(yup.ref("start"), "task end date can't be before task start date"),
   });
 
   const onSubmit = (values) => {

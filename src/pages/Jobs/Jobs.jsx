@@ -3,7 +3,7 @@ import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { getJobs } from "../../firebase/queries/jobQueries";
-import ListLayout from "../../layouts/ListLayout";
+import ListLayout from "../../layouts/ListLayout/ListLayout";
 import JobCard from "../../components/cards/JobCard/JobCard";
 import AddJob from "../../components/form/AddJob";
 
@@ -51,9 +51,9 @@ const Jobs = (props) => {
           searchProperties={searchProperties}
           Card={JobCard}
           refresh={refresh}
-          toggleRefresh={toggleRefresh}
+          setRefresh={toggleRefresh}
           cardID={"job_id"}
-          noDataMessage={"No job found"}
+          noDataMessage={"There are currently no jobs, you can add one above."}
           {...props}
         />
         {isPopped && <AddJob {...props} clientProp={client} />}

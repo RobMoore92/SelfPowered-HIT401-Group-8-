@@ -12,7 +12,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import TextInput from "../../components/form/TextInput";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Popover from "../containers/Popover/Popover";
+import Popover from "../popovers/PopoverContainer/PopoverContainer";
 import DateTimeInput from "./DateTimeInput";
 import { useEffect, useState } from "react";
 import { addJob, editJob } from "../../firebase/queries/jobQueries";
@@ -28,7 +28,7 @@ const validationSchema = yup.object().shape({
 
 export default (props) => {
   const [present, dismiss] = useIonToast();
-  const { editValues, clientProp, isPopped, setPopped } = props;
+  const { editValues, clientProp, setPopped, refresh, setRefresh } = props;
   const formattedStart = new Date(editValues?.start?.seconds * 1000);
   const formattedDue = new Date(editValues?.due?.seconds * 1000);
 

@@ -1,18 +1,10 @@
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonList,
-  IonText,
-  useIonToast,
-} from "@ionic/react";
-import firebase, { db } from "../../firebase/firebase";
+import { IonButton, IonList, useIonToast } from "@ionic/react";
+import firebase from "../../firebase/firebase";
 import { Formik } from "formik";
 import * as yup from "yup";
 import TextInput from "../../components/form/TextInput";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory } from "react-router";
-import Popover from "../containers/Popover/Popover";
+import Popover from "../popovers/PopoverContainer/PopoverContainer";
 import { addClient, editClient } from "../../firebase/queries/clientQueries";
 
 const initialValues = {

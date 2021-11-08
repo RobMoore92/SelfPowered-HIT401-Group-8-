@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, useLocation } from "react-router";
-import { getTasks, getTasksByJob } from "../../firebase/queries/taskQueries";
-import ListLayout from "../../layouts/ListLayout";
+import { getTasks } from "../../firebase/queries/taskQueries";
+import ListLayout from "../../layouts/ListLayout/ListLayout";
 import AddTask from "../../components/form/AddTask";
 import TaskCard from "../../components/cards/TaskCard/TaskCard";
 
@@ -54,7 +54,7 @@ const Tasks = (props) => {
           refresh={refresh}
           setRefresh={setRefresh}
           cardID={"task_id"}
-          noDataMessage={"No task found, click on a job to add one."}
+          noDataMessage={"No task found, choose a job to add one."}
           {...props}
         />
         {isPopped && (

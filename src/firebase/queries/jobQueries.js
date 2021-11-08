@@ -1,5 +1,6 @@
 import { db } from "../firebase";
 import { deleteDocumentsByJob } from "./documentQueries";
+import { deleteAllTasks } from "./taskQueries";
 
 export const getJobs = (uid, setJobs, orderByName, hideCompleted) => {
   let query = db.collection("users").doc(uid).collection("jobs");
@@ -124,16 +125,15 @@ export const deleteAllJobs = (uid) => {
 };
 
 export const deleteJob = (uid, id) => {
-  db.collection("users")
-    .doc(uid)
-    .collection("jobs")
-    .doc(id)
-    .delete()
-    .then(() => {
-      deleteDocumentsByJob(uid, id).then((r) => {
-        console.log(r);
+    db.collection("users")
+      .doc(uid)
+      .collection("jobs")
+      .doc(id)
+      .delete()
+      .then(async () => {
+        await deleteDocumentsByJob(uid, id);
+        await deleteAllTasks(uid, id);
       });
-    });
 };
 
 export const completeJob = (uid, id, completed) => {

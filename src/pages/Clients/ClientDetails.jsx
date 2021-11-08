@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import firebase from "../../firebase/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, useLocation } from "react-router";
 import { getJobsByClient } from "../../firebase/queries/jobQueries";
-import ListLayout from "../../layouts/ListLayout";
+import ListLayout from "../../layouts/ListLayout/ListLayout";
 import JobCard from "../../components/cards/JobCard/JobCard";
 import AddJob from "../../components/form/AddJob";
 import { GlobalContext } from "../../App";
@@ -42,7 +40,7 @@ const ClientDetails = (props) => {
       );
       return () => unsubscribe();
     }
-  }, [user, orderByName, hideCompleted]);
+  }, [user, orderByName, hideCompleted, location]);
 
   return (
     user && (

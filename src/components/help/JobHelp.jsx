@@ -1,5 +1,5 @@
 import React from "react";
-import Popover from "../containers/Popover/Popover";
+import Popover from "../popovers/PopoverContainer/PopoverContainer";
 
 const WelcomeHelp = (props) => {
   return (

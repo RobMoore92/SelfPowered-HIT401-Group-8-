@@ -4,7 +4,7 @@ import {
   deleteClient,
   updateClientActive,
 } from "../../../firebase/queries/clientQueries";
-import Popover from "../../containers/Popover/Popover";
+import Popover from "../../popovers/PopoverContainer/PopoverContainer";
 import AddClient from "../../form/AddClient";
 import SettingsButton from "../../buttons/SettingsButton/SettingsButton";
 import EditButton from "../../buttons/EditButton/EditButton";

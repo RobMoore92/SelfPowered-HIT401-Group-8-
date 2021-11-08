@@ -2,12 +2,12 @@ import React from "react";
 import { IonCheckbox } from "@ionic/react";
 import { completeJob } from "../../firebase/queries/jobQueries";
 
-const CompletedCheckbox = ({ uid, id, completed, refresh, toggleRefresh }) => {
+const CompletedCheckbox = ({ uid, id, completed, refresh, setRefresh }) => {
   return (
     <IonCheckbox
       onIonChange={() => {
         completeJob(uid, id, !completed).then(() => {
-          toggleRefresh(!refresh);
+          setRefresh(!refresh);
         });
       }}
       color="primary"

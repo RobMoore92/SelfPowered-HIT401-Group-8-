@@ -1,19 +1,18 @@
 import "./Login.css";
 import { Formik } from "formik";
 import * as yup from "yup";
-import Popover from "../../containers/Popover/Popover";
+import Popover from "../../popovers/PopoverContainer/PopoverContainer";
 import firebase from "../../../firebase/firebase";
 import { useHistory } from "react-router";
 
 import {
   IonButton,
-  IonItem,
-  IonInput,
-  IonNote,
-  useIonToast,
-  IonLabel,
   IonIcon,
+  IonInput,
+  IonItem,
+  IonLabel,
   IonText,
+  useIonToast,
 } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
 

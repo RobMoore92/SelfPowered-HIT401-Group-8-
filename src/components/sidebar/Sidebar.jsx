@@ -3,49 +3,42 @@ import {
   IonContent,
   IonIcon,
   IonItem,
-  IonListHeader,
-  IonMenuToggle,
-  IonMenu,
-  IonList,
-  IonNote,
   IonLabel,
-  IonImg,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle,
+  IonNote,
 } from "@ionic/react";
 import {
   attachOutline,
   briefcaseOutline,
-  homeOutline,
   informationCircleSharp,
-  informationSharp,
   listOutline,
-  logoIonic,
   logOutSharp,
-  personCircleOutline,
-  personOutline,
-  personSharp,
-  settingsSharp,
-} from "ionicons/icons";
-import {
   mailOutline,
   mailSharp,
   paperPlaneOutline,
   paperPlaneSharp,
-  heartOutline,
-  heartSharp,
+  personCircleOutline,
+  personSharp,
+  settingsSharp,
 } from "ionicons/icons";
 import { useContext, useEffect, useState } from "react";
 import Login from "../auth/Login/Login";
 import Signup from "../auth/Signup/Signup";
-import firebase, { db } from "../../firebase/firebase";
+import firebase from "../../firebase/firebase";
 import SettingsPopover from "../popovers/SettingsPopover";
 import { useLocation } from "react-router";
 import { getUserData } from "../../firebase/queries/userQueries";
 import { GlobalContext } from "../../App";
 import AccountPopover from "../popovers/AccountPopover";
 import icon from "../../images/selfpowered-small.svg";
+
 export default (props) => {
   const location = useLocation();
-  const { user, setHelp, documents, setDocuments } = useContext(GlobalContext);
+  const { user, setHelp, documents, setDocuments, isOnline } =
+    useContext(GlobalContext);
   const [refresh, setRefresh] = useState(false);
   const [loginPopped, setLoginPopped] = useState(false);
   const [signupPopped, setSignupPopped] = useState(false);
@@ -126,14 +119,14 @@ export default (props) => {
       mdIcon: briefcaseOutline,
     },
     {
-      title: "Tasks",
+      title: "All Tasks",
       url: "/tasks",
       iosIcon: listOutline,
       mdIcon: listOutline,
     },
     {
       disabled: documents,
-      title: "Documents",
+      title: isOnline ? "All Documents" : "All Documents (Offline)",
       url: "/documents",
       iosIcon: attachOutline,
       mdIcon: attachOutline,

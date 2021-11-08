@@ -1,5 +1,6 @@
 import React from "react";
-import { IonButton, useIonAlert } from "@ionic/react";
+import { IonButton } from "@ionic/react";
+
 const EditButton = ({ text, toggleEdit, toggleSettings }) => {
   return (
     <IonButton
