@@ -18,17 +18,16 @@ const Subtitle = (props) => {
           } text-lg md:text-2xl mr-1 md:mr-3`}
           icon={icon}
         />
-        <div className={`${hasHover ? "hidden md:block" : "block"}`}>
+        <div className={`${hasHover ? "hidden xl:block" : "block"}`}>
           <IonText
-            className={` ion-no-padding lg:block ${
+            className={` ion-no-padding  ${
               textColor ? textColor : "text-gray-600"
-            } text-xs xs:text-sm text-gray-100 font-medium line-clamp-1 normal-case hidden`}
+            } text-xs sm:text-sm text-gray-100 font-medium line-clamp-1 normal-case hidden`}
           >
             {text}
           </IonText>
         </div>
       </IonButton>
-
       {hover && hasHover && (
         <HoverCard {...props} hover={hover} setHover={setHover} />
       )}

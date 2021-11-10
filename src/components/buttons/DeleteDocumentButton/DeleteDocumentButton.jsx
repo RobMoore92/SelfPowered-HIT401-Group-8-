@@ -13,7 +13,7 @@ const DeleteDocumentButton = (props) => {
         deleteDocument(fullPath, setRefresh, refresh);
       }}
     >
-      <IonIcon className={`text-xl text-gray-700`} icon={trashOutline} />
+      <IonIcon className={`text-xl text-white`} icon={trashOutline} />
     </IonButton>
   );
 };

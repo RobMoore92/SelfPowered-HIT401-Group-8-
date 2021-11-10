@@ -30,10 +30,10 @@ const ClientDetails = (props) => {
   ];
 
   useEffect(() => {
-    if (user) {
+    if (user && client) {
       const unsubscribe = getJobsByClient(
         user?.uid,
-        client?.client_id,
+        client.client_id,
         setJobs,
         orderByName,
         hideCompleted

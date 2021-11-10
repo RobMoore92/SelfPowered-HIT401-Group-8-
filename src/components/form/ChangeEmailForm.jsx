@@ -12,7 +12,7 @@ import { Formik } from "formik";
 import TextInput from "./TextInput";
 import React from "react";
 
-const ChangeEmailForm = ({ setPage, user }) => {
+const ChangeEmailForm = ({ setPage, user, setLoginPopped }) => {
   const [present, dismiss] = useIonToast();
   const initialValues = {
     email: "",
@@ -38,15 +38,20 @@ const ChangeEmailForm = ({ setPage, user }) => {
           color: "success",
           duration: 2000,
         });
+        window.location.reload();
       })
       .catch((e) => {
         setPage("account");
-        present({
-          buttons: [{ text: "hide", handler: () => dismiss() }],
-          message: e.message,
-          color: "danger",
-          duration: 2000,
-        });
+        if (e.code === "auth/requires-recent-login") {
+          setLoginPopped(true);
+        } else {
+          present({
+            buttons: [{ text: "hide", handler: () => dismiss() }],
+            message: e.code,
+            color: "danger",
+            duration: 2000,
+          });
+        }
       });
   };
   return (

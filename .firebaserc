@@ -1,5 +1,6 @@
 {
   "projects": {
-    "testing": "hit401-93f42"
+    "testing": "hit401-93f42",
+    "default": "hit401-93f42"
   }
 }

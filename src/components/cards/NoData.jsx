@@ -6,7 +6,7 @@ const NoData = ({ message }) => {
   return (
     <div
       className={
-        "h-full w-full max-w-sm flex flex-col justify-center self-center items-center mb-12 md:mt-32 text-center"
+        "h-full w-full max-w-sm flex flex-col justify-center self-center items-center mt-8 mb-12 md:mt-32 text-center"
       }
     >
       <IonIcon className={"text-6xl text-blue-500 mb-2"} icon={alertCircle} />

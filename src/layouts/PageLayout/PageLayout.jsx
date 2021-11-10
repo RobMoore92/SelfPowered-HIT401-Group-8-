@@ -66,7 +66,7 @@ export default ({
               </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-              <div className=" sm:px-6 flex-grow h-full">
+              <div className="px-2 sm:px-6 flex-grow h-full">
                 {cloneElement(children, {
                   showHelp: showHelp,
                   setShowHelp: setShowHelp,

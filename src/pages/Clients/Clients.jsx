@@ -5,8 +5,10 @@ import { getClients } from "../../firebase/queries/clientQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
 import ClientCard from "../../components/cards/ClientCard/ClientCard";
 import AddClient from "../../components/form/AddClient";
+import { useLocation } from "react-router";
 
 const Clients = (props) => {
+  const location = useLocation();
   const [user] = useAuthState(firebase.auth());
   const [clients, setClients] = useState([]);
   const [showInactive, setShowInactive] = useState(false);
@@ -27,9 +29,15 @@ const Clients = (props) => {
 
   useEffect(() => {
     if (user) {
-      getClients(user.uid, setClients, showInactive, orderCompany);
+      const unsubscribe = getClients(
+        user.uid,
+        setClients,
+        showInactive,
+        orderCompany
+      );
+      return () => unsubscribe();
     }
-  }, [user, showInactive, orderCompany]);
+  }, [user, showInactive, orderCompany, location]);
 
   return (
     <>

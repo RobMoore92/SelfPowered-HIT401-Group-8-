@@ -2,7 +2,6 @@ import "./Login.css";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Popover from "../../popovers/PopoverContainer/PopoverContainer";
-import firebase from "../../../firebase/firebase";
 import { useHistory } from "react-router";
 
 import {
@@ -15,6 +14,7 @@ import {
   useIonToast,
 } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
+import { googleLogin, login } from "../../../firebase/queries/userQueries";
 
 const initialValues = {
   username: "",
@@ -48,56 +48,13 @@ const validationSchema = yup.object().shape(
 export default (props) => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
-  const successMessage = () => {
-    present({
-      color: "success",
-      buttons: [{ text: "hide", handler: () => dismiss() }],
-      message: "You have successfully logged in",
-      duration: 3000,
-    });
-  };
-  const errorMessage = (e) => {
-    present({
-      color: "danger",
-      buttons: [{ text: "hide", handler: () => dismiss() }],
-      message: e.message,
-      duration: 3000,
-    });
-  };
   const onSubmit = (values, { resetForm }) => {
-    const email =
-      values.email === "" ? `${values.username}@anonymous.com` : values.email;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, values.password)
-      .then(() => {
-        props.setPopped(false);
-        resetForm({});
-        successMessage();
-        history.push("/clients");
-      })
-      .catch((e) => {
-        resetForm({});
-        errorMessage(e);
-      });
+      login(values, present, dismiss, resetForm, props.setPopped, history);
   };
 
-  const handleGoogleSubmit = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(() => {
-        props.setPopped(false);
-        successMessage();
-        history.push("/clients");
-      })
-      .catch((e) => {
-        errorMessage(e);
-      });
-  };
   return (
     <Popover {...props}>
+      {props.required && <p>You must login again to update your account.</p>}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -184,7 +141,9 @@ export default (props) => {
                 color="primary"
                 expand="block"
                 slot="start"
-                onClick={handleGoogleSubmit}
+                onClick={() =>
+                  googleLogin(present, dismiss, props.setPopped, history)
+                }
               >
                 <IonIcon
                   color="light"

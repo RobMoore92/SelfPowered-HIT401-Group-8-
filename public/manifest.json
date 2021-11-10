@@ -3,18 +3,18 @@
   "name": "My Ionic App",
   "icons": [
     {
-      "src": "/favicon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "/icon.png",
+      "src": "/android-chrome-192x192.png",
       "type": "image/png",
-      "sizes": "512x512",
+      "sizes": "192x192",
       "purpose": "maskable any"
     }
   ],
-  "start_url": "https://hit401-93f42.web.app/",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"

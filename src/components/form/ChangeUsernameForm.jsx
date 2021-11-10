@@ -12,7 +12,7 @@ import { Formik } from "formik";
 import TextInput from "./TextInput";
 import React from "react";
 
-const ChangeUsernameForm = ({ setPage, user }) => {
+const ChangeUsernameForm = ({ setPage, user, setLoginPopped }) => {
   const [present, dismiss] = useIonToast();
   const initialValues = {
     username: "",
@@ -33,6 +33,7 @@ const ChangeUsernameForm = ({ setPage, user }) => {
       .updateEmail(formattedEmail)
       .then(() => {
         setPage("account");
+        window.location.reload();
         present({
           buttons: [{ text: "hide", handler: () => dismiss() }],
           message: "Username updated",
@@ -42,12 +43,16 @@ const ChangeUsernameForm = ({ setPage, user }) => {
       })
       .catch((e) => {
         setPage("account");
-        present({
-          buttons: [{ text: "hide", handler: () => dismiss() }],
-          message: e.message,
-          color: "danger",
-          duration: 2000,
-        });
+        if (e.code === "auth/requires-recent-login") {
+          setLoginPopped(true);
+        } else {
+          present({
+            buttons: [{ text: "hide", handler: () => dismiss() }],
+            message: e.code,
+            color: "danger",
+            duration: 2000,
+          });
+        }
       });
   };
   return (

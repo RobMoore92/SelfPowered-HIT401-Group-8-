@@ -7,9 +7,8 @@ import { isPast } from "date-fns";
 import { cardColor } from "../../../helpers/cardColor";
 import { formatDateTime } from "../../../helpers/formatHelper";
 import { getTagsByJob } from "../../../firebase/queries/tagQueries";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import Tag from "../../tags/Tag";
-import DueIcon from "../../buttons/DueIcon/DueIcon";
 import NavigateButton from "../../buttons/NavigateButton/NavigateButton";
 import CompletedCheckbox from "../CompletedCheckbox";
 import JobSettings from "../Settings/JobSettings";
@@ -21,6 +20,7 @@ import useTimer from "../../hooks/useTimer";
 import TagPopover from "../../tags/TagPopover";
 
 export default (props) => {
+  const history = useHistory();
   const { item, isPopped, setPopped, parent } = props;
   const { client_name, job_id, start, due, completed, title, description } =
     item;
@@ -41,7 +41,7 @@ export default (props) => {
   }, [user, location]);
 
   return (
-    <IonCard>
+    <IonCard className={"shadow transition duration-500 hover:shadow-lg mb-4"}>
       <div
         className={`flex w-full justify-between h-16 rounded-t-md ${cardColor(
           completed,
@@ -51,7 +51,7 @@ export default (props) => {
         <div className="flex items-center justify-between w-full">
           <div className={"flex items-center space-x-2"}>
             <TagsButton toggleTags={toggleTags} />
-            {overdue && !completed && <DueIcon />}
+
             <DocumentsButton
               showDocuments={showDocuments}
               toggleDocuments={toggleDocuments}
@@ -96,7 +96,13 @@ export default (props) => {
         />
       )}
 
-      <IonCardContent color="light">
+      <IonCardContent
+        color="light"
+        className={"cursor-pointer"}
+        onClick={() => {
+          history.push("/job", { jobDetails: item, title: title });
+        }}
+      >
         <div className="flex flex-col">
           <div className={"flex space-x-4 -mb-1 md:mb-0"}>
             <div

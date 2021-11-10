@@ -5,7 +5,6 @@ import {
   IonButton,
   IonItem,
   IonList,
-  IonText,
   IonTitle,
   useIonToast,
 } from "@ionic/react";
@@ -22,47 +21,73 @@ import { deleteAllClients } from "../../firebase/queries/clientQueries";
 import ChangeUsernameForm from "../form/ChangeUsernameForm";
 import ChangeEmailForm from "../form/ChangeEmailForm";
 import ChangePasswordForm from "../form/ChangePasswordForm";
+import useIsOnline from "../hooks/useIsOffline";
+import Login from "../auth/Login/Login";
 
 const AccountPopover = (props) => {
   const [page, setPage] = useState("account");
+  const [loginPopped, setLoginPopped] = useState(false);
   const [user] = useAuthState(firebase.auth());
   const hasUsername = user?.email.includes("@anonymous.com");
   return (
     user && (
-      <Popover {...props}>
-        {page === "account" && (
-          <Account
-            hasUsername={hasUsername}
-            user={user}
-            page={page}
-            setPage={setPage}
-          />
-        )}
-        {page === "username" && (
-          <ChangeUsernameForm user={user} setPage={setPage} />
-        )}
-        {page === "email" && <ChangeEmailForm user={user} setPage={setPage} />}
-        {page === "password" && (
-          <ChangePasswordForm user={user} setPage={setPage} />
-        )}
-      </Popover>
+      <>
+        <Popover {...props}>
+          {page === "account" && (
+            <Account
+              hasUsername={hasUsername}
+              user={user}
+              page={page}
+              setPage={setPage}
+            />
+          )}
+          {page === "username" && (
+            <ChangeUsernameForm
+              user={user}
+              setPage={setPage}
+              setLoginPopped={setLoginPopped}
+            />
+          )}
+          {page === "email" && (
+            <ChangeEmailForm
+              user={user}
+              setPage={setPage}
+              setLoginPopped={setLoginPopped}
+            />
+          )}
+          {page === "password" && (
+            <ChangePasswordForm
+              user={user}
+              setPage={setPage}
+              setLoginPopped={setLoginPopped}
+            />
+          )}
+        </Popover>
+        <Login required isPopped={loginPopped} setPopped={setLoginPopped} />
+      </>
     )
   );
 };
 
 const Account = ({ setPage, hasUsername, user }) => {
+  const isOnline = useIsOnline();
   const history = useHistory();
   const [present, dismiss] = useIonToast();
+
   return (
     <>
       <IonTitle className={"ion-no-padding mb-4 text-gray-600"}>
         Account Settings
       </IonTitle>
-      <IonText>Update your profile</IonText>
+      <p className={"mb-4 text-sm"}>
+        {isOnline
+          ? "On this popup you can change your account's username, email, password or even delete your entire account."
+          : "You must be online to use change account details."}
+      </p>
       <IonList>
         <IonItem className={"text-gray-700 w-full"}>
           <IonButton
-            disabled={!hasUsername}
+            disabled={!hasUsername || !isOnline}
             onClick={() => {
               setPage("username");
             }}
@@ -75,7 +100,7 @@ const Account = ({ setPage, hasUsername, user }) => {
         </IonItem>
         <IonItem className={"text-gray-700 w-full"}>
           <IonButton
-            disabled={hasUsername}
+            disabled={hasUsername || !isOnline}
             onClick={() => {
               setPage("email");
             }}
@@ -88,6 +113,7 @@ const Account = ({ setPage, hasUsername, user }) => {
         </IonItem>
         <IonItem className={"text-gray-700 w-full"}>
           <IonButton
+            disabled={!isOnline}
             onClick={() => {
               setPage("password");
             }}
@@ -100,6 +126,7 @@ const Account = ({ setPage, hasUsername, user }) => {
         </IonItem>
         <IonItem className={"text-gray-700 w-full"}>
           <IonButton
+            disabled={!isOnline}
             onClick={() => {
               present({
                 color: "danger",

@@ -38,6 +38,7 @@
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-chartjs-2": "^3.1.1",
+    "react-detect-offline": "^2.4.5",
     "react-dom": "^17.0.1",
     "react-firebase-hooks": "^3.0.4",
     "react-router": "^5.2.0",

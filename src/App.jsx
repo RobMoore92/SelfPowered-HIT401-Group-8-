@@ -21,7 +21,6 @@ import "@ionic/react/css/display.css";
 //styles
 import "./theme/variables.css";
 import "./theme/global.css";
-
 import { useAuthState } from "react-firebase-hooks/auth";
 import { createContext, useState } from "react";
 import PageLayout from "./layouts/PageLayout/PageLayout";
@@ -36,15 +35,17 @@ import Documents from "./pages/Documents/Documents";
 import PageNotFound from "./pages/404/404";
 import WelcomeHelp from "./components/help/WelcomeHelp";
 import { useTaskAlert } from "./components/hooks/useTaskAlert";
-import { useIsOnline } from "./components/hooks/useIsOffline";
+import useIsOnline from "./components/hooks/useIsOffline";
+import About from "./pages/About/About";
+import Overview from "./pages/Overview/Overview";
 
 export const GlobalContext = createContext(undefined);
 
 const App = () => {
   const [present, dismiss] = useIonToast();
   const [user, loading] = useAuthState(firebase.auth());
-  const [help, setHelp] = useState(false);
-  const [documents, setDocuments] = useState(false);
+  const [help, setHelp] = useState(true);
+  const [documents, setDocuments] = useState(true);
   useTaskAlert(present, dismiss);
   const isOnline = useIsOnline();
   return (
@@ -67,17 +68,27 @@ const App = () => {
               <IonRouterOutlet id="main">
                 <Route
                   component={() => (
-                    <PageLayout title={"404"}>
+                    <PageLayout showBack title={"404"}>
                       <PageNotFound />
                     </PageLayout>
                   )}
                 />
                 <Route path="/" exact={true}>
-                  <Redirect to={user ? "/welcome" : "/welcome"} />
+                  <Redirect to={user ? "/overview" : "/welcome"} />
                 </Route>
                 <Route path="/welcome" exact={true}>
                   <PageLayout helpComponent={WelcomeHelp}>
-                    <Welcome user={user} />
+                    <Welcome />
+                  </PageLayout>
+                </Route>
+                <Route path="/overview" exact={true}>
+                  <PageLayout showBack privateRoute title={"Overview"}>
+                    <Overview />
+                  </PageLayout>
+                </Route>
+                <Route path="/about" exact={true}>
+                  <PageLayout showBack>
+                    <About />
                   </PageLayout>
                 </Route>
                 <Route path="/client" exact={true}>
@@ -92,12 +103,27 @@ const App = () => {
                   </PageLayout>
                 </Route>
                 <Route path="/tasks" exact={true}>
-                  <PageLayout privateRoute title={"Tasks"} showBack>
+                  <PageLayout
+                    privateRoute
+                    title={"Tasks"}
+                    showBack
+                    showHelp={help}
+                  >
                     <Tasks />
                   </PageLayout>
                 </Route>
-                <Route path={"/documents"} exact={true} showHelp={help}>
-                  <PageLayout privateRoute title={"Documents"}>
+                <Route
+                  path={"/documents"}
+                  exact={true}
+                  showBack
+                  showHelp={help}
+                >
+                  <PageLayout
+                    privateRoute
+                    title={"Documents"}
+                    showBack
+                    showHelp={help}
+                  >
                     <Documents />
                   </PageLayout>
                 </Route>
@@ -112,7 +138,7 @@ const App = () => {
                   </PageLayout>
                 </Route>
                 <Route path="/clients" exact={true} showHelp={help}>
-                  <PageLayout privateRoute title={"Clients"} showAdd>
+                  <PageLayout privateRoute title={"Clients"} showBack showAdd>
                     <Clients />
                   </PageLayout>
                 </Route>

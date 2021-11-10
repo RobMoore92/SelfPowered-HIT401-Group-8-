@@ -64,13 +64,19 @@ export const getTasksByJob = (
   });
 };
 
-export const addTask = (uid, values, parent, setPopped, present, dismiss) => {
-  const job = db
-    .collection("users")
-    .doc(uid)
-    .collection("jobs")
-    .doc(parent.job_id)
-    .get();
+export const addTask = (
+  uid,
+  values,
+  parent,
+  setPopped,
+  present,
+  dismiss,
+  offline
+) => {
+  // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
+  if (offline) {
+    setPopped(false);
+  }
   db.collection("users")
     .doc(uid)
     .collection("jobs")
@@ -112,8 +118,13 @@ export const editTask = (
   present,
   dismiss,
   refresh,
-  setRefresh
+  setRefresh,
+  offline
 ) => {
+  // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
+  if (offline) {
+    setPopped(false);
+  }
   db.collection("users")
     .doc(uid)
     .collection("jobs")

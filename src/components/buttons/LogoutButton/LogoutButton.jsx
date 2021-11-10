@@ -1,30 +1,17 @@
 import "./LogoutButton.css";
 import { IonFabButton, IonIcon, useIonToast } from "@ionic/react";
-import firebase from "../../../firebase/firebase";
 import { logOutOutline } from "ionicons/icons";
+import { logout } from "../../../firebase/queries/userQueries";
 import { useHistory } from "react-router";
 
 export default () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
-  const clickHandler = () => {
-    history.replace("/welcome");
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        present({
-          buttons: [{ text: "hide", handler: () => dismiss() }],
-          message: "You have logged out",
-          duration: 2000,
-        });
-      });
-  };
   return (
     <IonFabButton
       style={{ "--background": "#454545" }}
       data-testid="logout-button"
-      onClick={clickHandler}
+      onClick={() => logout(present, dismiss, history)}
       className="menu-button mr-4"
       shape="round"
       size="small"

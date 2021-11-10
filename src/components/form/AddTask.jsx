@@ -9,11 +9,13 @@ import DateTimeInput from "./DateTimeInput";
 
 import { formatISO, parseISO } from "date-fns";
 import { addTask, editTask } from "../../firebase/queries/taskQueries";
+import useIsOnline from "../hooks/useIsOffline";
 
 export default (props) => {
   const { refresh, setRefresh } = props;
   const [user] = useAuthState(firebase.auth());
   const [present, dismiss] = useIonToast();
+  const isOnline = useIsOnline();
   const { editValues, parent, setPopped, mode } = props;
   const formattedJobStart = editValues
     ? new Date(editValues?.job?.start.seconds * 1000)
@@ -56,7 +58,8 @@ export default (props) => {
         present,
         dismiss,
         refresh,
-        setRefresh
+        setRefresh,
+        !isOnline
       );
     } else {
       addTask(
@@ -67,7 +70,8 @@ export default (props) => {
         present,
         dismiss,
         refresh,
-        setRefresh
+        setRefresh,
+        !isOnline
       );
     }
   };

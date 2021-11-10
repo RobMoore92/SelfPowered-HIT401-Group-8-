@@ -21,10 +21,7 @@ const DownloadDocumentButton = (props) => {
       }}
     >
       <a ref={linkRef} href={link} download />
-      <IonIcon
-        className={`text-xl text-gray-700 mr-1`}
-        icon={downloadOutline}
-      />
+      <IonIcon className={`text-xl text-white mr-1`} icon={downloadOutline} />
     </IonButton>
   );
 };

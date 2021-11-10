@@ -3,7 +3,9 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/messaging";
 import "firebase/storage";
+
 const config = {
+  databaseURL: "https://hit401-93f42.firebaseio.com",
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_PROJECT_ID,
@@ -17,19 +19,18 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
+  firebase
+    .firestore()
+    .settings({ experimentalForceLongPolling: true, merge: true });
   if (process.env.NODE_ENV !== "test") {
     firebase
       .firestore()
       .enablePersistence()
       .catch((err) => {
         if (err.code == "failed-precondition") {
-          // Multiple tabs open, persistence can only be enabled
-          // in one tab at a a time.
-          // ...
+          console.log("failed");
         } else if (err.code == "unimplemented") {
-          // The current browser does not support all of the
-          // features required to enable persistence
-          // ...
+          console.log("unimplemented");
         }
       });
   }

@@ -6,9 +6,11 @@ import {
   listDocuments,
 } from "../../firebase/queries/documentQueries";
 import DocumentCard from "../cards/DocumentCard";
+import useIsOnline from "../hooks/useIsOffline";
 
 const DocumentsPopover = (props) => {
   const { uid, id } = props;
+  const isOnline = useIsOnline();
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -30,6 +32,7 @@ const DocumentsPopover = (props) => {
         )}
         <div>
           {!loading &&
+            isOnline &&
             list.map((item) => {
               return (
                 <DocumentCard
@@ -47,8 +50,14 @@ const DocumentsPopover = (props) => {
             <IonProgressBar className={"mt-2"} buffer={0.5} value={progress} />
           </div>
         )}
-        {list.length === 0 && !loading && <IonText>No Documents</IonText>}
+        {!isOnline && (
+          <IonText>You must be online to upload documents.</IonText>
+        )}
+        {list.length === 0 && !loading && isOnline && (
+          <IonText>No Documents</IonText>
+        )}
         <input
+          disabled={!isOnline}
           className={"mt-4"}
           type="file"
           onChange={(e) => {

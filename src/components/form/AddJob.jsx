@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { addJob, editJob } from "../../firebase/queries/jobQueries";
 import { getClientNames } from "../../firebase/queries/clientQueries";
 import { formatISO, parseISO } from "date-fns";
+import useIsOnline from "../hooks/useIsOffline";
 
 const validationSchema = yup.object().shape({
   title: yup.string().required(),
@@ -57,7 +58,7 @@ export default (props) => {
   const [user] = useAuthState(firebase.auth());
   const [client, setClient] = useState(initialClient);
   const [clients, setClients] = useState([]);
-
+  const isOnline = useIsOnline();
   useEffect(() => {
     if (user) {
       const unsubscribe = getClientNames(user.uid, setClients);
@@ -74,14 +75,11 @@ export default (props) => {
         client,
         setPopped,
         present,
-        dismiss
+        dismiss,
+        !isOnline
       );
     } else {
-      addJob(user.uid, values, client)
-        .then(() => {
-          setPopped(false);
-        })
-        .catch((e) => console.log(e));
+      addJob(user.uid, values, client, setPopped, present, dismiss, !isOnline);
     }
   };
 
@@ -152,7 +150,6 @@ export default (props) => {
 
 const ClientPicker = ({ client, setClient, errors, clients }) => {
   const [present] = useIonPicker();
-  console.log(123);
   return (
     <IonItem>
       <IonLabel for="description" position="stacked">

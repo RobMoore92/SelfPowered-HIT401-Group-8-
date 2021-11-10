@@ -24,7 +24,7 @@ export default (props) => {
   const timer = useTimer(formattedDue, completed, item);
 
   return (
-    <IonCard>
+    <IonCard className={"shadow  mb-4"}>
       <div
         className={`flex w-full justify-between h-16 rounded-t-md bg-gray-600 items-center p-4`}
       >

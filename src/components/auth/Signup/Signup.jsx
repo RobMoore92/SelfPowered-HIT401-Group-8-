@@ -2,7 +2,6 @@ import "./Signup.css";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Popover from "../../popovers/PopoverContainer/PopoverContainer";
-import firebase, { db } from "../../../firebase/firebase";
 import { useHistory } from "react-router";
 
 import {
@@ -13,6 +12,7 @@ import {
   IonText,
   useIonToast,
 } from "@ionic/react";
+import { signUp } from "../../../firebase/queries/userQueries";
 
 const initialValues = {
   username: "",
@@ -51,39 +51,7 @@ export default (props) => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
   const onSubmit = (values, { resetForm }) => {
-    let email =
-      values.email === "" ? `${values.username}@anonymous.com` : values.email;
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, values.password)
-      .then(({ user }) => {
-        db.collection("users")
-          .doc(user.uid)
-          .set({
-            help: true,
-            documents: true,
-          })
-          .then(() => {
-            props.setPopped(false);
-            resetForm({});
-            present({
-              color: "success",
-              buttons: [{ text: "hide", handler: () => dismiss() }],
-              message: "You have successfully logged in",
-              duration: 5000,
-            });
-            history.push("/clients");
-          });
-      })
-      .catch((e) => {
-        resetForm({});
-        present({
-          color: "danger",
-          buttons: [{ text: "hide", handler: () => dismiss() }],
-          message: e.message,
-          duration: 5000,
-        });
-      });
+    signUp(values, resetForm, present, dismiss, props.setPopped, history);
   };
   return (
     <Popover {...props}>

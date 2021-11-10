@@ -9,10 +9,12 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
+  useIonToast,
 } from "@ionic/react";
 import {
   attachOutline,
   briefcaseOutline,
+  gridOutline,
   informationCircleSharp,
   listOutline,
   logOutSharp,
@@ -27,18 +29,18 @@ import {
 import { useContext, useEffect, useState } from "react";
 import Login from "../auth/Login/Login";
 import Signup from "../auth/Signup/Signup";
-import firebase from "../../firebase/firebase";
 import SettingsPopover from "../popovers/SettingsPopover";
-import { useLocation } from "react-router";
-import { getUserData } from "../../firebase/queries/userQueries";
+import { useHistory, useLocation } from "react-router";
+import { getUserData, logout } from "../../firebase/queries/userQueries";
 import { GlobalContext } from "../../App";
 import AccountPopover from "../popovers/AccountPopover";
 import icon from "../../images/selfpowered-small.svg";
 
 export default (props) => {
   const location = useLocation();
-  const { user, setHelp, documents, setDocuments, isOnline } =
-    useContext(GlobalContext);
+  const history = useHistory();
+  const [present, dismiss] = useIonToast();
+  const { user, setHelp, documents, setDocuments } = useContext(GlobalContext);
   const [refresh, setRefresh] = useState(false);
   const [loginPopped, setLoginPopped] = useState(false);
   const [signupPopped, setSignupPopped] = useState(false);
@@ -79,9 +81,7 @@ export default (props) => {
     },
     {
       title: "Logout",
-      onClick: () => {
-        firebase.auth().signOut();
-      },
+      onClick: () => logout(present, dismiss, history),
       url: "/welcome",
       iosIcon: logOutSharp,
       mdIcon: logOutSharp,
@@ -104,8 +104,20 @@ export default (props) => {
       iosIcon: paperPlaneOutline,
       mdIcon: paperPlaneSharp,
     },
+    {
+      title: "About",
+      url: "/about",
+      iosIcon: informationCircleSharp,
+      mdIcon: informationCircleSharp,
+    },
   ];
   const authPages = [
+    {
+      title: "Overview",
+      url: "/overview",
+      iosIcon: gridOutline,
+      mdIcon: gridOutline,
+    },
     {
       title: "Clients",
       url: "/clients",
@@ -126,14 +138,13 @@ export default (props) => {
     },
     {
       disabled: documents,
-      title: isOnline ? "All Documents" : "All Documents (Offline)",
+      title: "All Documents",
       url: "/documents",
       iosIcon: attachOutline,
       mdIcon: attachOutline,
     },
   ];
   const displayName = user?.email.replace("@anonymous.com", "");
-  console.log(user?.email);
   return (
     <IonMenu data-testid="sidebar" contentId="main" type="overlay">
       <IonContent>
@@ -176,14 +187,12 @@ export default (props) => {
         setPopped={setSettingsPopped}
         refresh={refresh}
         setRefresh={setRefresh}
-        {...props}
       />
       <AccountPopover
         isPopped={accountPopped}
         setPopped={setAccountPopped}
         refresh={refresh}
         setRefresh={setRefresh}
-        {...props}
       />
     </IonMenu>
   );

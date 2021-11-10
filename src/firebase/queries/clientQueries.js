@@ -45,7 +45,18 @@ export const getClientNames = (uid, setClients) => {
   });
 };
 
-export const addClient = (uid, values, setPopped, present, dismiss) => {
+export const addClient = (
+  uid,
+  values,
+  setPopped,
+  present,
+  dismiss,
+  offline
+) => {
+  // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
+  if (offline) {
+    setPopped(false);
+  }
   db.collection("users")
     .doc(uid)
     .collection("clients")
@@ -77,7 +88,11 @@ export const addClient = (uid, values, setPopped, present, dismiss) => {
     });
 };
 
-export const editClient = (uid, values, setPopped, present, dismiss) => {
+export const editClient = (uid, values, setPopped, present, dismiss, offline) => {
+  // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
+  if (offline) {
+    setPopped(false);
+  }
   db.collection("users")
     .doc(uid)
     .collection("clients")

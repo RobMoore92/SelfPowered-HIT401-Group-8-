@@ -1,5 +1,5 @@
 import React from "react";
-import { IonIcon, IonItem, IonText } from "@ionic/react";
+import { IonIcon, IonText } from "@ionic/react";
 import {
   documentTextOutline,
   image,
@@ -21,18 +21,18 @@ const DocumentCard = (props) => {
     }
   };
   return (
-    <IonItem>
-      <div className={"flex items-center justify-between  w-full"}>
-        <div className={"flex items-center"}>
-          <IonIcon className={"mr-2 text-2xl"} icon={icon()} />
-          <IonText className={"line-clamp-1 w-full"}>{name}</IonText>
+    <div className={"bg-blue-500 px-3"}>
+      <div className={"flex items-center justify-between w-full"}>
+        <div className={"flex items-center "}>
+          <IonIcon className={"mr-2 text-2xl text-white"} icon={icon()} />
+          <IonText className={"line-clamp-1 w-full text-white"}>{name}</IonText>
         </div>
         <div className={"flex items-center"}>
           <DownloadDocumentButton {...props} />
           <DeleteDocumentButton {...props} />
         </div>
       </div>
-    </IonItem>
+    </div>
   );
 };
 

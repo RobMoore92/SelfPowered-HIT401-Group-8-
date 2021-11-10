@@ -31,7 +31,6 @@ export const getJobsByClient = (
   orderByName,
   hideCompleted
 ) => {
-  console.log(uid, client_id, 123);
   let query = db
     .collection("users")
     .doc(uid)
@@ -54,10 +53,20 @@ export const getJobsByClient = (
   });
 };
 
-export const addJob = (uid, values, client) => {
-  console.log(uid, values, client);
-  return db
-    .collection("users")
+export const addJob = (
+  uid,
+  values,
+  client,
+  setPopped,
+  present,
+  dismiss,
+  offline
+) => {
+  // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
+  if (offline) {
+    setPopped(false);
+  }
+  db.collection("users")
     .doc(uid)
     .collection("jobs")
     .doc()
@@ -69,6 +78,24 @@ export const addJob = (uid, values, client) => {
       title_query: values.title.toLowerCase(),
       client_id: client.id,
       client_name: client.name,
+    })
+    .then(() => {
+      setPopped(false);
+      present({
+        buttons: [{ text: "hide", handler: () => dismiss() }],
+        message: "Job successfully added",
+        color: "success",
+        duration: 2000,
+      });
+    })
+    .catch(({ message }) => {
+      setPopped(false);
+      present({
+        buttons: [{ text: "hide", handler: () => dismiss() }],
+        message: message,
+        color: "danger",
+        duration: 2000,
+      });
     });
 };
 
@@ -79,8 +106,13 @@ export const editJob = (
   client,
   setPopped,
   present,
-  dismiss
+  dismiss,
+  offline
 ) => {
+  // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
+  if (offline) {
+    setPopped(false);
+  }
   db.collection("users")
     .doc(uid)
     .collection("jobs")
@@ -125,15 +157,15 @@ export const deleteAllJobs = (uid) => {
 };
 
 export const deleteJob = (uid, id) => {
-    db.collection("users")
-      .doc(uid)
-      .collection("jobs")
-      .doc(id)
-      .delete()
-      .then(async () => {
-        await deleteDocumentsByJob(uid, id);
-        await deleteAllTasks(uid, id);
-      });
+  db.collection("users")
+    .doc(uid)
+    .collection("jobs")
+    .doc(id)
+    .delete()
+    .then(async () => {
+      await deleteDocumentsByJob(uid, id);
+      await deleteAllTasks(uid, id);
+    });
 };
 
 export const completeJob = (uid, id, completed) => {

@@ -6,6 +6,7 @@ import TextInput from "../../components/form/TextInput";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Popover from "../popovers/PopoverContainer/PopoverContainer";
 import { addClient, editClient } from "../../firebase/queries/clientQueries";
+import useIsOnline from "../hooks/useIsOffline";
 
 const initialValues = {
   firstName: "",
@@ -36,11 +37,12 @@ export default (props) => {
   const { editValues, setPopped, isPopped, mode } = props;
   const [user] = useAuthState(firebase.auth());
   const [present, dismiss] = useIonToast();
+  const isOnline = useIsOnline();
   const onSubmit = (values) => {
     if (mode === "edit") {
-      editClient(user.uid, values, setPopped, present, dismiss);
+      editClient(user.uid, values, setPopped, present, dismiss, !isOnline);
     } else {
-      addClient(user.uid, values, setPopped, present, dismiss);
+      addClient(user.uid, values, setPopped, present, dismiss, !isOnline);
     }
   };
   return (
