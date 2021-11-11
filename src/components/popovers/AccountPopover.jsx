@@ -79,9 +79,9 @@ const Account = ({ setPage, hasUsername, user }) => {
       <IonTitle className={"ion-no-padding mb-4 text-gray-600"}>
         Account Settings
       </IonTitle>
-      <p className={"mb-4 text-sm"}>
+      <p className={"mb-4"}>
         {isOnline
-          ? "On this popup you can change your account's username, email, password or even delete your entire account."
+          ? "Here you can change your account's username, email, password or even delete your entire account."
           : "You must be online to use change account details."}
       </p>
       <IonList>

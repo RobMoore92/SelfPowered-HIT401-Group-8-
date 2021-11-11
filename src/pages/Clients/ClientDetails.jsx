@@ -5,9 +5,11 @@ import ListLayout from "../../layouts/ListLayout/ListLayout";
 import JobCard from "../../components/cards/JobCard/JobCard";
 import AddJob from "../../components/form/AddJob";
 import { GlobalContext } from "../../App";
+import JobHelp from "../../components/help/JobHelp";
 
 const ClientDetails = (props) => {
-  const { user } = useContext(GlobalContext);
+  const { helpPopped, setHelpPopped } = props;
+  const { user, help } = useContext(GlobalContext);
   const location = useLocation();
   const [refresh, toggleRefresh] = useState(false);
   const [jobs, setJobs] = useState([]);
@@ -58,6 +60,7 @@ const ClientDetails = (props) => {
           {...props}
         />
         <AddJob {...props} clientProp={client} />
+        {help && <JobHelp isPopped={helpPopped} setPopped={setHelpPopped} />}
       </>
     )
   );

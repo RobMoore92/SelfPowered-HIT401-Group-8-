@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import Popover from "../../popovers/PopoverContainer/PopoverContainer";
 import { useHistory } from "react-router";
-
+import firebase from "../../../firebase/firebase";
 import {
   IonButton,
   IonInput,
@@ -13,6 +13,7 @@ import {
   useIonToast,
 } from "@ionic/react";
 import { signUp } from "../../../firebase/queries/userQueries";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const initialValues = {
   username: "",
@@ -48,11 +49,20 @@ const validationSchema = yup.object().shape(
 );
 
 export default (props) => {
-  const history = useHistory();
-  const [present, dismiss] = useIonToast();
-  const onSubmit = (values, { resetForm }) => {
-    signUp(values, resetForm, present, dismiss, props.setPopped, history);
-  };
+    const history = useHistory();
+    const [user] = useAuthState(firebase.auth());
+    const [present, dismiss] = useIonToast();
+    const onSubmit = (values, { resetForm }) => {
+      signUp(
+        user,
+        values,
+        resetForm,
+        present,
+        dismiss,
+        props.setPopped,
+        history
+      );
+    };
   return (
     <Popover {...props}>
       <Formik

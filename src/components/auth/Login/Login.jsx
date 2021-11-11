@@ -49,7 +49,7 @@ export default (props) => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
   const onSubmit = (values, { resetForm }) => {
-      login(values, present, dismiss, resetForm, props.setPopped, history);
+    login(values, present, dismiss, resetForm, props.setPopped, history);
   };
 
   return (

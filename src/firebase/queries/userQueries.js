@@ -150,8 +150,13 @@ export const logout = (present, dismiss, history) => {
     });
 };
 
-export const getUserData = async (uid) => {
-  return await db.collection("users").doc(uid).get();
+export const getUserData = (uid, setHelp, setDocuments) => {
+  db.collection("users")
+    .doc(uid)
+    .onSnapshot((doc) => {
+      setHelp(doc.data().help);
+      setDocuments(doc.data().documents);
+    });
 };
 
 export const toggleHelp = (uid, help) => {

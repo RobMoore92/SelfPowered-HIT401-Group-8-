@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, useLocation } from "react-router";
@@ -6,9 +6,12 @@ import { getTasks } from "../../firebase/queries/taskQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
 import AddTask from "../../components/form/AddTask";
 import TaskCard from "../../components/cards/TaskCard/TaskCard";
+import AllTasksHelp from "../../components/help/AllTasksHelp";
+import { GlobalContext } from "../../App";
 
 const Tasks = (props) => {
-  const { isPopped } = props;
+  const { isPopped, helpPopped, setHelpPopped } = props;
+  const { help } = useContext(GlobalContext);
   const location = useLocation();
   const [user] = useAuthState(firebase.auth());
   const [refresh, setRefresh] = useState(false);
@@ -64,6 +67,9 @@ const Tasks = (props) => {
             {...props}
             parent={job}
           />
+        )}
+        {help && (
+          <AllTasksHelp isPopped={helpPopped} setPopped={setHelpPopped} />
         )}
       </>
     )

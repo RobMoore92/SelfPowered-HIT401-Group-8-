@@ -88,7 +88,14 @@ export const addClient = (
     });
 };
 
-export const editClient = (uid, values, setPopped, present, dismiss, offline) => {
+export const editClient = (
+  uid,
+  values,
+  setPopped,
+  present,
+  dismiss,
+  offline
+) => {
   // if the app is offline firebase doesn't handle the promise returns even though cache stores it.
   if (offline) {
     setPopped(false);

@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
-import firebase from "../../firebase/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { getAllDocuments } from "../../firebase/queries/documentQueries";
 import { IonList } from "@ionic/react";
 import DocumentCard from "../../components/cards/DocumentCard";
 import NoData from "../../components/cards/NoData";
 import useIsOnline from "../../components/hooks/useIsOffline";
+import DocumentHelp from "../../components/help/DocumentHelp";
+import { GlobalContext } from "../../App";
 
 const Documents = (props) => {
+  const { helpPopped, setHelpPopped } = props;
+  const { user, help } = useContext(GlobalContext);
   const [docs, setDocs] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const [user] = useAuthState(firebase.auth());
   const location = useLocation();
   const isOnline = useIsOnline();
   const uid = user?.uid;
@@ -69,6 +70,7 @@ const Documents = (props) => {
           />
         </div>
       )}
+      {help && <DocumentHelp isPopped={helpPopped} setPopped={setHelpPopped} />}
     </>
   );
 };

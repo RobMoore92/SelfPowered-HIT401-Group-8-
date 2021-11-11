@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import firebase from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getClients } from "../../firebase/queries/clientQueries";
@@ -6,9 +6,13 @@ import ListLayout from "../../layouts/ListLayout/ListLayout";
 import ClientCard from "../../components/cards/ClientCard/ClientCard";
 import AddClient from "../../components/form/AddClient";
 import { useLocation } from "react-router";
+import ClientHelp from "../../components/help/ClientHelp";
+import { GlobalContext } from "../../App";
 
 const Clients = (props) => {
+  const { helpPopped, setHelpPopped } = props;
   const location = useLocation();
+  const { help } = useContext(GlobalContext);
   const [user] = useAuthState(firebase.auth());
   const [clients, setClients] = useState([]);
   const [showInactive, setShowInactive] = useState(false);
@@ -49,6 +53,7 @@ const Clients = (props) => {
         cardID={"client_id"}
         noDataMessage={"There are currently no clients, you can add one above."}
       />
+      {help && <ClientHelp isPopped={helpPopped} setPopped={setHelpPopped} />}
       <AddClient {...props} />
     </>
   );

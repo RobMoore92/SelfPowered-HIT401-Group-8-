@@ -22,7 +22,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import "./theme/global.css";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PageLayout from "./layouts/PageLayout/PageLayout";
 import Sidebar from "./components/sidebar/Sidebar";
 import Jobs from "./pages/Jobs/Jobs";
@@ -33,11 +33,12 @@ import Welcome from "./pages/Welcome/Welcome";
 import Tasks from "./pages/Tasks/Tasks";
 import Documents from "./pages/Documents/Documents";
 import PageNotFound from "./pages/404/404";
-import WelcomeHelp from "./components/help/WelcomeHelp";
+
 import { useTaskAlert } from "./components/hooks/useTaskAlert";
 import useIsOnline from "./components/hooks/useIsOffline";
 import About from "./pages/About/About";
 import Overview from "./pages/Overview/Overview";
+import { getUserData } from "./firebase/queries/userQueries";
 
 export const GlobalContext = createContext(undefined);
 
@@ -46,8 +47,13 @@ const App = () => {
   const [user, loading] = useAuthState(firebase.auth());
   const [help, setHelp] = useState(true);
   const [documents, setDocuments] = useState(true);
-  useTaskAlert(present, dismiss);
   const isOnline = useIsOnline();
+  useTaskAlert(present, dismiss);
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid, setHelp, setDocuments);
+    }
+  }, [user]);
   return (
     !loading && (
       <GlobalContext.Provider
@@ -77,7 +83,7 @@ const App = () => {
                   <Redirect to={user ? "/overview" : "/welcome"} />
                 </Route>
                 <Route path="/welcome" exact={true}>
-                  <PageLayout helpComponent={WelcomeHelp}>
+                  <PageLayout>
                     <Welcome />
                   </PageLayout>
                 </Route>
@@ -127,18 +133,36 @@ const App = () => {
                     <Documents />
                   </PageLayout>
                 </Route>
-                <Route path="/job" exact={true} showHelp={help}>
-                  <PageLayout privateRoute payloadTitle showBack showAdd>
+                <Route path="/job" exact={true}>
+                  <PageLayout
+                    privateRoute
+                    payloadTitle
+                    showHelp={help}
+                    showBack
+                    showAdd
+                  >
                     <JobDetails />
                   </PageLayout>
                 </Route>
-                <Route path="/jobs" exact={true} showHelp={help}>
-                  <PageLayout privateRoute title={"Jobs"} showBack showAdd>
+                <Route path="/jobs" exact={true}>
+                  <PageLayout
+                    showHelp={help}
+                    privateRoute
+                    title={"Jobs"}
+                    showBack
+                    showAdd
+                  >
                     <Jobs />
                   </PageLayout>
                 </Route>
                 <Route path="/clients" exact={true} showHelp={help}>
-                  <PageLayout privateRoute title={"Clients"} showBack showAdd>
+                  <PageLayout
+                    privateRoute
+                    title={"Clients"}
+                    showHelp={help}
+                    showBack
+                    showAdd
+                  >
                     <Clients />
                   </PageLayout>
                 </Route>

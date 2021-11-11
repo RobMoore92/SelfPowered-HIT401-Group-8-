@@ -2,10 +2,9 @@ import { IonButton } from "@ionic/react";
 import { useState } from "react";
 import Login from "../../components/auth/Login/Login";
 import Signup from "../../components/auth/Signup/Signup";
-import WelcomeHelp from "../../components/help/WelcomeHelp";
 import selfpoweredLogo from "../../images/selfpowered.png";
 
-export default ({ user, token, showHelp, setShowHelp }) => {
+export default () => {
   const [loginPopover, setLoginPopover] = useState(false);
   const [signupPopover, setSignupPopover] = useState(false);
   return (
@@ -24,7 +23,6 @@ export default ({ user, token, showHelp, setShowHelp }) => {
 
         <Login isPopped={loginPopover} setPopped={setLoginPopover} />
         <Signup isPopped={signupPopover} setPopped={setSignupPopover} />
-        <WelcomeHelp isPopped={showHelp} setPopped={setShowHelp} />
         <div className="mx-auto justify-center flex space-x-4 mt-8">
           <IonButton
             className="auth-button"

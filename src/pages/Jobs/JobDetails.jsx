@@ -8,11 +8,12 @@ import { GlobalContext } from "../../App";
 import { IonIcon, IonText } from "@ionic/react";
 import { calendarNumberSharp } from "ionicons/icons";
 import { formatDateTime } from "../../helpers/formatHelper";
+import TaskHelp from "../../components/help/TaskHelp";
 
 const Jobs = (props) => {
-  const { isPopped } = props;
+  const { isPopped, helpPopped, setHelpPopped } = props;
   const location = useLocation();
-  const { user } = useContext(GlobalContext);
+  const { user, help } = useContext(GlobalContext);
   const [refresh, setRefresh] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [orderByName, toggleOrderByName] = useState(false);
@@ -70,6 +71,7 @@ const Jobs = (props) => {
           noDataMessage={"There are currently no tasks, you can add one above."}
           {...props}
         />
+        {help && <TaskHelp isPopped={helpPopped} setPopped={setHelpPopped} />}
         {isPopped && <AddTask {...props} parent={job} />}
       </>
     )

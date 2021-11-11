@@ -23,8 +23,8 @@ export default ({
   children,
   showBack,
   showAdd,
+  showHelp,
   payloadTitle,
-  helpComponent,
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -32,7 +32,7 @@ export default ({
   const [loaded, setLoaded] = useState(false);
   const [authed, setAuthed] = useState(false);
   const [isPopped, setPopped] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
+  const [helpPopped, setHelpPopped] = useState(false);
   const payload = history.location.state;
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default ({
                 <IonButtons slot="end" className="mr-0 sm:mr-3">
                   {showBack && <BackButton />}
                   {showAdd && <AddButton setPopped={setPopped} />}
-                  {helpComponent && <HelpButton setShowHelp={setShowHelp} />}
+                  {showHelp && <HelpButton setHelpPopped={setHelpPopped} />}
                   {user && <LogoutButton />}
                 </IonButtons>
               </IonToolbar>
@@ -68,8 +68,8 @@ export default ({
             <IonContent fullscreen>
               <div className="px-2 sm:px-6 flex-grow h-full">
                 {cloneElement(children, {
-                  showHelp: showHelp,
-                  setShowHelp: setShowHelp,
+                  helpPopped: helpPopped,
+                  setHelpPopped: setHelpPopped,
                   isPopped: isPopped,
                   setPopped: setPopped,
                 })}

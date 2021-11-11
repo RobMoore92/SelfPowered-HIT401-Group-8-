@@ -5,7 +5,7 @@ const About = () => {
   return (
     <div
       className={
-        "flex flex-col justify-center items-center self-center pb-16 mt-8"
+        "flex flex-col justify-center items-center self-center pb-16 pt-8 md:pt-24 lg:pt-32"
       }
     >
       <img

@@ -63,7 +63,7 @@ const Overview = () => {
     {
       id: 5,
       title: "Account",
-      color: "from-red-400 to-red-500",
+      color: "from-blue-400 to-blue-500",
       icon: personSharp,
       link: "/overview",
       onClick: () => setAccountPopped(true),
@@ -78,7 +78,7 @@ const Overview = () => {
     {
       id: 7,
       title: "Settings",
-      color: "from-red-400 to-red-500",
+      color: "from-blue-400 to-blue-500",
       icon: settingsSharp,
       link: "/overview",
       onClick: () => setSettingsPopped(true),
@@ -86,7 +86,7 @@ const Overview = () => {
     {
       id: 8,
       title: "Login",
-      color: "from-blue-400 to-blue-500",
+      color: "from-red-400 to-red-500",
       icon: logInSharp,
       link: "/overview",
       onClick: () => setLoginPopped(true),
@@ -94,7 +94,7 @@ const Overview = () => {
     {
       id: 9,
       title: "Logout",
-      color: "from-blue-400 to-blue-500",
+      color: "from-red-400 to-red-500",
       icon: logOutSharp,
       link: "/welcome",
       onClick: () => logout(present, dismiss, history),

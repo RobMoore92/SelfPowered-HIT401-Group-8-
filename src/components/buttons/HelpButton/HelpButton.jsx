@@ -1,20 +1,20 @@
 import { IonFabButton, IonIcon } from "@ionic/react";
-import { helpCircleOutline } from "ionicons/icons";
+import { helpCircleSharp } from "ionicons/icons";
 
-export default ({ setShowHelp }) => {
+export default ({ setHelpPopped }) => {
   const clickHandler = () => {
-    setShowHelp(true);
+    setHelpPopped(true);
   };
   return (
     <IonFabButton
-      style={{ "--background": "#1a85ff" }}
+      style={{ "--background": "#eaeaea" }}
       data-testid="help-button"
-      onClick={clickHandler}
+      onClick={() => clickHandler()}
       className="h-9 w-9"
       shape="round"
       size="small"
     >
-      <IonIcon color="light" icon={helpCircleOutline} />
+      <IonIcon className={"text-blue-500"} icon={helpCircleSharp} />
     </IonFabButton>
   );
 };

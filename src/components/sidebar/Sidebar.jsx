@@ -26,36 +26,25 @@ import {
   personSharp,
   settingsSharp,
 } from "ionicons/icons";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Login from "../auth/Login/Login";
 import Signup from "../auth/Signup/Signup";
 import SettingsPopover from "../popovers/SettingsPopover";
-import { useHistory, useLocation } from "react-router";
-import { getUserData, logout } from "../../firebase/queries/userQueries";
+import { useHistory } from "react-router";
+import { logout } from "../../firebase/queries/userQueries";
 import { GlobalContext } from "../../App";
 import AccountPopover from "../popovers/AccountPopover";
 import icon from "../../images/selfpowered-small.svg";
 
-export default (props) => {
-  const location = useLocation();
+export default () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
-  const { user, setHelp, documents, setDocuments } = useContext(GlobalContext);
+  const { user, documents } = useContext(GlobalContext);
   const [refresh, setRefresh] = useState(false);
   const [loginPopped, setLoginPopped] = useState(false);
   const [signupPopped, setSignupPopped] = useState(false);
   const [settingsPopped, setSettingsPopped] = useState(false);
   const [accountPopped, setAccountPopped] = useState(false);
-  useEffect(() => {
-    if (user) {
-      getUserData(user.uid).then((snap) => {
-        const results = snap.data();
-        setHelp(results?.help);
-        setDocuments(results?.documents);
-        setRefresh(!refresh);
-      });
-    }
-  }, [user, location]);
   const settingPages = [
     {
       title: "Account",
