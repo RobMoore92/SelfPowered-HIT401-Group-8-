@@ -49,20 +49,12 @@ const validationSchema = yup.object().shape(
 );
 
 export default (props) => {
-    const history = useHistory();
-    const [user] = useAuthState(firebase.auth());
-    const [present, dismiss] = useIonToast();
-    const onSubmit = (values, { resetForm }) => {
-      signUp(
-        user,
-        values,
-        resetForm,
-        present,
-        dismiss,
-        props.setPopped,
-        history
-      );
-    };
+  const history = useHistory();
+  const [user] = useAuthState(firebase.auth());
+  const [present, dismiss] = useIonToast();
+  const onSubmit = (values, { resetForm }) => {
+    signUp(user, values, resetForm, present, dismiss, props.setPopped, history);
+  };
   return (
     <Popover {...props}>
       <Formik
