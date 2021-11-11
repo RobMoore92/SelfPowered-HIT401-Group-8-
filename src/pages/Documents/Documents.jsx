@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { getAllDocuments } from "../../firebase/queries/documentQueries";
 import { IonList } from "@ionic/react";
-import DocumentCard from "../../components/cards/DocumentCard";
-import NoData from "../../components/cards/NoData";
+import DocumentCard from "../../components/cards/Components/DocumentCard/DocumentCard";
+import NoData from "../../components/cards/Components/NoData/NoData";
 import useIsOnline from "../../components/hooks/useIsOffline";
-import DocumentHelp from "../../components/help/DocumentHelp";
+import DocumentHelp from "../../components/help/DocumentHelp/DocumentHelp";
 import { GlobalContext } from "../../App";
 
 const Documents = (props) => {

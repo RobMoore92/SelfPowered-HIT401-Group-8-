@@ -33,7 +33,6 @@ const useIsOnline = () => {
       window.removeEventListener("online", updateNetwork);
     };
   }, []);
-  console.log(123);
   return isOnline;
 };
 

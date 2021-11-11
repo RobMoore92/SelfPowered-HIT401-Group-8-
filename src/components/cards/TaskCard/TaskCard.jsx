@@ -9,14 +9,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/firebase";
 import useTimer from "../../hooks/useTimer";
 import { formatDateTime } from "../../../helpers/formatHelper";
-import Subtitle from "../Subtitle";
-import DueIcon from "../../buttons/DueIcon/DueIcon";
+import Subtitle from "../Components/Subtitle/Subtitle";
+import DueIcon from "../../icons/DueIcon/DueIcon";
 import { cardColor } from "../../../helpers/cardColor";
-import TaskSettings from "../Settings/TaskSettings";
+import TaskSettings from "../Settings/TaskSettings/TaskSettings";
 
 export default (props) => {
   const { item, isPopped, setPopped, refresh, setRefresh } = props;
-  const { task_id, task, start, due, completed } = item;
+  const { task, start, due, completed } = item;
   const [user] = useAuthState(auth);
   const formattedStart = new Date(start.seconds * 1000);
   const formattedDue = new Date(due.seconds * 1000);

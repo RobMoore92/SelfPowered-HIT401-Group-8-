@@ -15,8 +15,8 @@ import {
   settingsSharp,
 } from "ionicons/icons";
 import Login from "../../components/auth/Login/Login";
-import SettingsPopover from "../../components/popovers/SettingsPopover";
-import AccountPopover from "../../components/popovers/AccountPopover";
+import SettingsPopover from "../../components/popovers/SettingsPopover/SettingsPopover";
+import AccountPopover from "../../components/popovers/AccountPopover/AccountPopover";
 import { logout } from "../../firebase/queries/userQueries";
 import { useHistory } from "react-router";
 

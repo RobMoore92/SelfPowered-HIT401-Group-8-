@@ -10,12 +10,12 @@ import { getTagsByJob } from "../../../firebase/queries/tagQueries";
 import { useHistory, useLocation } from "react-router";
 import Tag from "../../tags/Tag";
 import NavigateButton from "../../buttons/NavigateButton/NavigateButton";
-import CompletedCheckbox from "../CompletedCheckbox";
-import JobSettings from "../Settings/JobSettings";
-import Subtitle from "../Subtitle";
+import CompletedCheckbox from "../Components/CompletedCheckbox/CompletedCheckbox";
+import JobSettings from "../Settings/JobSettings/JobSettings";
+import Subtitle from "../Components/Subtitle/Subtitle";
 import DocumentsButton from "../../buttons/DocumentsButton/DocumentsButton";
 import TagsButton from "../../buttons/TagsButton/TagsButton";
-import DocumentsPopover from "../../popovers/DocumentsPopover";
+import DocumentsPopover from "../../popovers/DocumentsPopover/DocumentsPopover";
 import useTimer from "../../hooks/useTimer";
 import TagPopover from "../../tags/TagPopover";
 
@@ -50,14 +50,20 @@ export default (props) => {
       >
         <div className="flex items-center justify-between w-full">
           <div className={"flex items-center space-x-2"}>
+            <Subtitle
+              icon={hourglassOutline}
+              textColor={"text-gray-100"}
+              color={"text-gray-100"}
+              text={timer}
+            />
+          </div>
+          <div className={"flex items-center space-x-2"}>
             <TagsButton toggleTags={toggleTags} />
 
             <DocumentsButton
               showDocuments={showDocuments}
               toggleDocuments={toggleDocuments}
             />
-          </div>
-          <div className={"flex items-center space-x-2"}>
             <NavigateButton
               pathname={"/job"}
               payload={{ jobDetails: item, title: title }}
@@ -107,7 +113,7 @@ export default (props) => {
           <div className={"flex space-x-4 -mb-1 md:mb-0"}>
             <div
               className={
-                "flex items-center sm:space-x-4 md:space-x-8 justify-between sm:justify-start w-full"
+                "flex items-center space-x-4 md:space-x-8  sm:justify-start w-full"
               }
             >
               <Subtitle
@@ -124,12 +130,6 @@ export default (props) => {
               />
             </div>
           </div>
-          <Subtitle
-            icon={hourglassOutline}
-            textColor={"text-gray-700"}
-            color={"text-gray-600"}
-            text={timer}
-          />
           {!parent && (
             <IonText
               className={

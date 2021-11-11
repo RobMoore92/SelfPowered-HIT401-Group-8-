@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { auth } from "../../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./ClientCard.css";
 import { IonCard, IonCardContent, IonIcon, IonText } from "@ionic/react";
 import {
   atCircleOutline,
@@ -12,8 +11,8 @@ import {
 import { updateClientImportant } from "../../../firebase/queries/clientQueries";
 import NavigateButton from "../../buttons/NavigateButton/NavigateButton";
 import ImportantButton from "../../buttons/ImportantButton/ImportantButton";
-import Subtitle from "../Subtitle";
-import ClientSettings from "../Settings/ClientSettings";
+import Subtitle from "../Components/Subtitle/Subtitle";
+import ClientSettings from "../Settings/ClientSettings/ClientSettings";
 import { useHistory } from "react-router";
 
 export default (props) => {

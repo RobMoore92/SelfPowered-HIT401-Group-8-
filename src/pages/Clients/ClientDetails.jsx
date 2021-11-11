@@ -3,9 +3,9 @@ import { useHistory, useLocation } from "react-router";
 import { getJobsByClient } from "../../firebase/queries/jobQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
 import JobCard from "../../components/cards/JobCard/JobCard";
-import AddJob from "../../components/form/AddJob";
+import AddJob from "../../components/form/AddJob/AddJob";
 import { GlobalContext } from "../../App";
-import JobHelp from "../../components/help/JobHelp";
+import JobHelp from "../../components/help/JobHelp/JobHelp";
 
 const ClientDetails = (props) => {
   const { helpPopped, setHelpPopped } = props;

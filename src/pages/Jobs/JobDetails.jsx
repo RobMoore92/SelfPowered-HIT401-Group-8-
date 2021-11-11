@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { getTasksByJob } from "../../firebase/queries/taskQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
-import AddTask from "../../components/form/AddTask";
+import AddTask from "../../components/form/AddTask/AddTask";
 import TaskCard from "../../components/cards/TaskCard/TaskCard";
 import { GlobalContext } from "../../App";
 import { IonIcon, IonText } from "@ionic/react";
 import { calendarNumberSharp } from "ionicons/icons";
 import { formatDateTime } from "../../helpers/formatHelper";
-import TaskHelp from "../../components/help/TaskHelp";
+import TaskHelp from "../../components/help/TaskHelp/TaskHelp";
 
 const Jobs = (props) => {
   const { isPopped, helpPopped, setHelpPopped } = props;

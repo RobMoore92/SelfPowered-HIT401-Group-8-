@@ -29,11 +29,11 @@ import {
 import { useContext, useState } from "react";
 import Login from "../auth/Login/Login";
 import Signup from "../auth/Signup/Signup";
-import SettingsPopover from "../popovers/SettingsPopover";
+import SettingsPopover from "../popovers/SettingsPopover/SettingsPopover";
 import { useHistory } from "react-router";
 import { logout } from "../../firebase/queries/userQueries";
 import { GlobalContext } from "../../App";
-import AccountPopover from "../popovers/AccountPopover";
+import AccountPopover from "../popovers/AccountPopover/AccountPopover";
 import icon from "../../images/selfpowered-small.svg";
 
 export default () => {

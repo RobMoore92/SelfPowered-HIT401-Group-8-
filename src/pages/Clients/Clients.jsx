@@ -4,9 +4,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getClients } from "../../firebase/queries/clientQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
 import ClientCard from "../../components/cards/ClientCard/ClientCard";
-import AddClient from "../../components/form/AddClient";
+import AddClient from "../../components/form/AddClient/AddClient";
 import { useLocation } from "react-router";
-import ClientHelp from "../../components/help/ClientHelp";
+import ClientHelp from "../../components/help/ClientHelp/ClientHelp";
 import { GlobalContext } from "../../App";
 
 const Clients = (props) => {

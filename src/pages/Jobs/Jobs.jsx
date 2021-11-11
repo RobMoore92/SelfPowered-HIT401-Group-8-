@@ -5,8 +5,8 @@ import { useHistory } from "react-router";
 import { getJobs } from "../../firebase/queries/jobQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
 import JobCard from "../../components/cards/JobCard/JobCard";
-import AddJob from "../../components/form/AddJob";
-import JobHelp from "../../components/help/JobHelp";
+import AddJob from "../../components/form/AddJob/AddJob";
+import JobHelp from "../../components/help/JobHelp/JobHelp";
 import { GlobalContext } from "../../App";
 
 const Jobs = (props) => {

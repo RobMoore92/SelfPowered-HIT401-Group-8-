@@ -4,10 +4,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, useLocation } from "react-router";
 import { getTasks } from "../../firebase/queries/taskQueries";
 import ListLayout from "../../layouts/ListLayout/ListLayout";
-import AddTask from "../../components/form/AddTask";
+import AddTask from "../../components/form/AddTask/AddTask";
 import TaskCard from "../../components/cards/TaskCard/TaskCard";
-import AllTasksHelp from "../../components/help/AllTasksHelp";
 import { GlobalContext } from "../../App";
+import TaskHelp from "../../components/help/TaskHelp/TaskHelp";
 
 const Tasks = (props) => {
   const { isPopped, helpPopped, setHelpPopped } = props;
@@ -68,9 +68,7 @@ const Tasks = (props) => {
             parent={job}
           />
         )}
-        {help && (
-          <AllTasksHelp isPopped={helpPopped} setPopped={setHelpPopped} />
-        )}
+        {help && <TaskHelp isPopped={helpPopped} setPopped={setHelpPopped} />}
       </>
     )
   );
