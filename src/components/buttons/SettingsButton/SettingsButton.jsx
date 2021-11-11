@@ -4,6 +4,7 @@ import { ellipsisVertical } from "ionicons/icons";
 const SettingsButton = ({ toggleSettings }) => {
   return (
     <IonButton
+      data-testid={"settings-button"}
       className="ion-no-padding"
       fill="clear"
       onClick={() => toggleSettings(true)}

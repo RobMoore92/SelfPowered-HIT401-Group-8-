@@ -5,6 +5,7 @@ import { warning } from "ionicons/icons";
 const DueIcon = () => {
   return (
     <IonIcon
+      data-testid={"due-icon"}
       className="mr-1 text-2xl text-gray-100"
       icon={warning}
       slot="end"

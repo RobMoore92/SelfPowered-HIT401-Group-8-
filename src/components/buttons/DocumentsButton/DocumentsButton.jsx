@@ -5,6 +5,7 @@ import { documents } from "ionicons/icons";
 const DocumentsButton = ({ showDocuments, toggleDocuments }) => {
   return (
     <IonButton
+      data-testid={"documents-button"}
       className={"ion-no-padding"}
       fill="clear"
       onClick={() => toggleDocuments(!showDocuments)}

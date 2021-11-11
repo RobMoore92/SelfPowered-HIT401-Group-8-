@@ -25,6 +25,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "browser-resolve": "^2.0.0",
     "chart.js": "^3.5.1",
     "chartjs-plugin-datalabels": "^2.0.0",
     "date-fns": "^2.23.0",
@@ -81,6 +82,11 @@
       "not op_mini all"
     ],
     "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "test": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"

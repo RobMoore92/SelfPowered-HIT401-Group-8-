@@ -7,8 +7,8 @@ export default ({ setHelpPopped }) => {
   };
   return (
     <IonFabButton
+      data-testid={"help-button"}
       style={{ "--background": "#eaeaea" }}
-      data-testid="help-button"
       onClick={() => clickHandler()}
       className="h-9 w-9"
       shape="round"

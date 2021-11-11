@@ -1,4 +1,3 @@
-import "./LogoutButton.css";
 import { IonFabButton, IonIcon, useIonToast } from "@ionic/react";
 import { logOutOutline } from "ionicons/icons";
 import { logout } from "../../../firebase/queries/userQueries";

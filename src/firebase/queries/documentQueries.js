@@ -92,7 +92,6 @@ export const downloadDocument = (fullPath) => {
   const storageRef = storage.ref(fullPath);
   return storageRef.getDownloadURL();
 };
-
 export const deleteDocument = (fullPath, setRefresh, refresh) => {
   storage
     .ref(fullPath)

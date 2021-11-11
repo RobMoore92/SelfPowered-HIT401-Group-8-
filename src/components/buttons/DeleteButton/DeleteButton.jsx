@@ -6,15 +6,11 @@ const DeleteButton = ({
   warningMessage,
   toggleSettings,
   statement,
-  parent,
-  uid,
-  id,
   present,
-  refresh,
-  setRefresh,
 }) => {
   return (
     <IonButton
+      data-testid={"delete-button"}
       onClick={() => {
         toggleSettings(false);
         present({

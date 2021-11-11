@@ -7,6 +7,7 @@ const DeleteDocumentButton = (props) => {
   const { fullPath, refresh, setRefresh } = props;
   return (
     <IonButton
+      data-testid={"delete-document-button"}
       className={"ion-no-padding"}
       fill="clear"
       onClick={() => {

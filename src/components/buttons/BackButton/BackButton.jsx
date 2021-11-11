@@ -6,6 +6,7 @@ const BackButton = () => {
   const history = useHistory();
   return (
     <IonFabButton
+      data-testid={"back-button"}
       style={{ "--background": "#e6e6e6" }}
       slot="end"
       className="menu-button"

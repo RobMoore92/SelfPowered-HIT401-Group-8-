@@ -4,6 +4,7 @@ import { IonButton } from "@ionic/react";
 const EditButton = ({ text, toggleEdit, toggleSettings }) => {
   return (
     <IonButton
+      data-testid={"edit-button"}
       onClick={() => {
         toggleSettings(false);
         toggleEdit(true);

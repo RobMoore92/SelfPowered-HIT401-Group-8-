@@ -14,6 +14,7 @@ const DownloadDocumentButton = (props) => {
   }, [link]);
   return (
     <IonButton
+      data-testid={"download-document-button"}
       className={"ion-no-padding"}
       fill="clear"
       onClick={() => {

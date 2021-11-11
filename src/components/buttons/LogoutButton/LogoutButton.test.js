@@ -1,9 +1,7 @@
-import { render } from "@testing-library/react";
+const { render } = require("@testing-library/react");
 import LogoutButton from "./LogoutButton";
 
-describe("logout-button", () => {
-  test("elements render correctly", async () => {
-    const { getByTestId } = render(<LogoutButton />);
-    expect(getByTestId("logout-button"));
-  });
+test("renders without crashing", async () => {
+  const { findByTestId } = render(<LogoutButton />);
+  await findByTestId("logout-button");
 });

@@ -7,6 +7,7 @@ const NavigateButton = ({ pathname, payload }) => {
   const history = useHistory();
   return (
     <IonButton
+      data-testid={"navigate-button"}
       className={"ion-no-padding"}
       fill="clear"
       icon={arrowForwardCircleOutline}

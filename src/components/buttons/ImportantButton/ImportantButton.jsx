@@ -4,7 +4,12 @@ import React from "react";
 
 const ImportantButton = ({ important, onClick }) => {
   return (
-    <IonButton className={"ion-no-padding"} fill="clear" onClick={onClick}>
+    <IonButton
+      data-testid={"important-button"}
+      className={"ion-no-padding"}
+      fill="clear"
+      onClick={onClick}
+    >
       <IonIcon
         className={`text-xl ${important ? "text-yellow-400" : "text-gray-100"}`}
         icon={star}

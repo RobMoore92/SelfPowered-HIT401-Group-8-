@@ -5,6 +5,7 @@ import { pricetagOutline } from "ionicons/icons";
 const TagsButton = ({ toggleTags }) => {
   return (
     <IonButton
+      data-testid={"tags-button"}
       className={"ion-no-padding"}
       fill="clear"
       onClick={() => {

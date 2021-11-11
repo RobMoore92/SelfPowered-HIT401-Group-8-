@@ -23,6 +23,7 @@ const AddButton = ({ setPopped }) => {
   };
   return (
     <motion.div
+      data-testid={"add-button"}
       transition={{ delay: 0.2, duration: 0.6 }}
       animate={zoom ? "out" : "in"}
       variants={variants}

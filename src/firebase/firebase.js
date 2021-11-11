@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import "firebase/messaging";
+
 import "firebase/storage";
 
 const config = {
@@ -23,23 +23,13 @@ if (!firebase.apps.length) {
     .firestore()
     .settings({ experimentalForceLongPolling: true, merge: true });
   if (process.env.NODE_ENV !== "test") {
-    firebase
-      .firestore()
-      .enablePersistence()
-      .catch((err) => {
-        if (err.code == "failed-precondition") {
-          console.log("failed");
-        } else if (err.code == "unimplemented") {
-          console.log("unimplemented");
-        }
-      });
+    firebase.firestore().enablePersistence();
   }
 } else {
   firebase.app();
 }
 export const db = firebase.firestore();
 export const auth = firebase.auth();
-export const messaging = firebase.messaging();
 export const storage = firebase.storage();
 
 export default firebase;
