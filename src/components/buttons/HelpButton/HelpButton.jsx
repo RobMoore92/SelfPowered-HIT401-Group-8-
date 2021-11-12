@@ -15,7 +15,7 @@ export default ({ setHelpPopped }) => {
       size="small"
     >
       <IonIcon
-        className="menu-button-icon pl-1 text-xl md:text-2xl text-blue-500"
+        className="menu-button-icon  text-xl md:text-2xl text-blue-500"
         icon={helpCircleSharp}
       />
     </IonFabButton>

@@ -102,14 +102,13 @@ export default (props) => {
         />
       )}
 
-      <IonCardContent
-        color="light"
-        className={"cursor-pointer"}
-        onClick={() => {
-          history.push("/job", { jobDetails: item, title: title });
-        }}
-      >
-        <div className="flex flex-col">
+      <IonCardContent color="light" className={"cursor-pointer"}>
+        <div
+          onClick={() => {
+            history.push("/job", { jobDetails: item, title: title });
+          }}
+          className="flex flex-col"
+        >
           <div className={"flex space-x-4 -mb-1 md:mb-0"}>
             <div
               className={
