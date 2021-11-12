@@ -37,3 +37,4 @@ npm install
 npm start
 ```
 
+#### _Designed and Developed by Robert Moore, Bishal Chaulagain, Shahariar Shanto._
