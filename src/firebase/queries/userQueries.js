@@ -113,7 +113,7 @@ export const signUp = (
           setPopped(false);
           resetForm({});
           successMessage();
-          history.push("/clients");
+          history.push("/overview");
         });
     })
     .catch((e) => {

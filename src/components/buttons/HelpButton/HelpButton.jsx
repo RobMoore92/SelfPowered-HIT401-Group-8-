@@ -10,11 +10,14 @@ export default ({ setHelpPopped }) => {
       data-testid={"help-button"}
       style={{ "--background": "#eaeaea" }}
       onClick={() => clickHandler()}
-      className="h-9 w-9"
+      className="menu-button mr-4"
       shape="round"
       size="small"
     >
-      <IonIcon className={"text-blue-500"} icon={helpCircleSharp} />
+      <IonIcon
+        className="menu-button-icon pl-1 text-xl md:text-2xl text-blue-500"
+        icon={helpCircleSharp}
+      />
     </IonFabButton>
   );
 };
