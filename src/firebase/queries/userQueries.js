@@ -62,10 +62,18 @@ export const googleLogin = (present, dismiss, setPopped, history) => {
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then(() => {
-      setPopped(false);
-      successMessage();
-      history.push("/overview");
+    .then(({ user }) => {
+      db.collection("users")
+        .doc(user.uid)
+        .set({
+          help: true,
+          documents: true,
+        })
+        .then(() => {
+          setPopped(false);
+          successMessage();
+          history.push("/overview");
+        });
     })
     .catch((e) => {
       errorMessage(e);

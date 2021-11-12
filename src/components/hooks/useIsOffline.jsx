@@ -6,7 +6,6 @@ const useIsOnline = () => {
   const updateNetwork = () => {
     const online = window.navigator.onLine;
     if (online) {
-      console.log("online");
       firebase
         .firestore()
         .enableNetwork()
@@ -15,7 +14,6 @@ const useIsOnline = () => {
           window.location.reload();
         });
     } else {
-      console.log("offline");
       firebase
         .firestore()
         .disableNetwork()

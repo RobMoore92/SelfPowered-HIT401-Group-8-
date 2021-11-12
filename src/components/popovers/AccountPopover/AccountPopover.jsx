@@ -29,7 +29,6 @@ const AccountPopover = (props) => {
   const [loginPopped, setLoginPopped] = useState(false);
   const [user] = useAuthState(firebase.auth());
   const hasUsername = user?.email.includes("@anonymous.com");
-  console.log(user);
   return (
     user && (
       <>

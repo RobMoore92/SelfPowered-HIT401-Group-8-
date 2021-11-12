@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "../../firebase/firebase";
+import { useContext, useEffect, useState } from "react";
 import { IonIcon, useIonToast } from "@ionic/react";
 import { Link } from "react-router-dom";
 import {
   attachOutline,
   briefcaseOutline,
-  informationSharp,
+  informationCircleSharp,
   listOutline,
-  logInSharp,
   logOutSharp,
   personCircleOutline,
   personSharp,
@@ -19,10 +16,11 @@ import SettingsPopover from "../../components/popovers/SettingsPopover/SettingsP
 import AccountPopover from "../../components/popovers/AccountPopover/AccountPopover";
 import { logout } from "../../firebase/queries/userQueries";
 import { useHistory } from "react-router";
+import { GlobalContext } from "../../App";
 
 const Overview = () => {
   const history = useHistory();
-  const [user] = useAuthState(firebase.auth());
+  const { user, documents } = useContext(GlobalContext);
   const [present, dismiss] = useIonToast();
   const [lastLogged, setLastLogged] = useState();
   const [displayName, setDisplayName] = useState();
@@ -59,6 +57,7 @@ const Overview = () => {
       color: "from-green-400 to-green-500",
       icon: attachOutline,
       link: "/documents",
+      disabled: !documents,
     },
     {
       id: 5,
@@ -72,7 +71,7 @@ const Overview = () => {
       id: 6,
       title: "About",
       color: "from-blue-400 to-blue-500",
-      icon: informationSharp,
+      icon: informationCircleSharp,
       link: "/about",
     },
     {
@@ -85,14 +84,6 @@ const Overview = () => {
     },
     {
       id: 8,
-      title: "Login",
-      color: "from-red-400 to-red-500",
-      icon: logInSharp,
-      link: "/overview",
-      onClick: () => setLoginPopped(true),
-    },
-    {
-      id: 9,
       title: "Logout",
       color: "from-red-400 to-red-500",
       icon: logOutSharp,
@@ -128,9 +119,11 @@ const Overview = () => {
           "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 gap-8 my-8 max-w-3xl"
         }
       >
-        {cards.map((item) => (
-          <Card key={item.id.toString()} {...item} />
-        ))}
+        {cards.map((item) => {
+          if (item.disabled !== true) {
+            return <Card key={item.id.toString()} {...item} />;
+          }
+        })}
       </div>
       <Login isPopped={loginPopped} setPopped={setLoginPopped} />
       <SettingsPopover
