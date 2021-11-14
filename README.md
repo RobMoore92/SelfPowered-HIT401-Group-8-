@@ -21,7 +21,6 @@ it can be used in any network condition and is perfect for work off-site.
 
 ## Tech
 
-Dillinger uses a number of open source projects to work properly:
 
 - Ionic React
 - Firebase
